@@ -10,6 +10,7 @@
   <style>
     /* ── Reset & base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img, svg, iframe, video { max-width: 100%; height: auto; }
 
     :root {
       --bg: #fafaf8;
@@ -27,9 +28,11 @@
       --font-body: 'Outfit', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; min-width: 100%; overflow-x: hidden; }
 
     body {
+      min-width: 100%;
+      overflow-x: hidden;
       font-family: var(--font-body);
       background: var(--bg);
       color: var(--text);
@@ -953,7 +956,9 @@ function applyDir() {
   const dir = meta.dir || 'ltr';
   document.documentElement.setAttribute('lang', currentLang);
   document.documentElement.setAttribute('dir', dir);
+  document.body.style.direction = dir;
   document.body.style.fontFamily = meta.font_family || "'Outfit', sans-serif";
+  window.requestAnimationFrame(() => window.scrollTo(0, 0));
 }
 
 /* ── Build dropdown ── */

@@ -501,6 +501,16 @@
         <span class="error-msg" data-i18n="validation_required"></span>
       </div>
 
+      <!-- Q: Business Location -->
+      <div class="q-row" id="row-business-location">
+        <label class="q-label" for="business_location">
+          <span data-i18n="q_business_location_label"></span><span class="req">*</span>
+        </label>
+        <input type="text" id="business_location" name="business_location" required
+               data-i18n-placeholder="q_business_location_placeholder" />
+        <span class="error-msg" data-i18n="validation_required"></span>
+      </div>
+
       <!-- Q2 -->
       <div class="q-row" id="row-q2">
         <label class="q-label" for="website"><span data-i18n="q2_label"></span></label>
@@ -813,37 +823,75 @@
       <h2 class="section-heading" data-i18n="section_f_title"></h2>
       <p class="section-sub" data-i18n="section_f_subtitle"></p>
 
-      <!-- Q21 contact group -->
-      <div class="q-row" id="row-q21">
-        <label class="q-label"><span data-i18n="q21_label"></span></label>
-        <div class="contact-grid">
-          <div class="contact-field" id="row-contact-name">
-            <label for="contact_name" data-i18n="q21_name_label"></label>
-            <input type="text" id="contact_name" name="contact_name" required
-                   data-i18n-placeholder="q21_name_placeholder" />
+      <!-- F1: Person filling the form -->
+      <div class="q-row" id="row-f1">
+        <p class="q-label" data-i18n="f_submitter_heading"></p>
+        <div class="contact-grid" style="margin-top:10px;">
+          <div class="contact-field" id="row-submitter-name">
+            <label for="submitter_name" data-i18n="q_submitter_name_label"></label>
+            <input type="text" id="submitter_name" name="submitter_name" required
+                   data-i18n-placeholder="q_submitter_name_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>
           </div>
-          <div class="contact-field" id="row-contact-role">
-            <label for="contact_role" data-i18n="q21_role_label"></label>
-            <input type="text" id="contact_role" name="contact_role" required
-                   data-i18n-placeholder="q21_role_placeholder" />
+          <div class="contact-field" id="row-submitter-role">
+            <label for="submitter_role" data-i18n="q_submitter_role_label"></label>
+            <input type="text" id="submitter_role" name="submitter_role" required
+                   data-i18n-placeholder="q_submitter_role_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>
           </div>
-          <div class="contact-field full" id="row-contact-email">
-            <label for="contact_email" data-i18n="q21_email_label"></label>
-            <input type="email" id="contact_email" name="contact_email" required
-                   data-i18n-placeholder="q21_email_placeholder" />
+          <div class="contact-field full" id="row-submitter-email">
+            <label for="submitter_email" data-i18n="q_submitter_email_label"></label>
+            <input type="email" id="submitter_email" name="submitter_email" required
+                   data-i18n-placeholder="q_submitter_email_placeholder" />
             <span class="error-msg" data-i18n="validation_email"></span>
           </div>
-          <div class="contact-field" id="row-contact-phone">
-            <label for="contact_phone" data-i18n="q21_phone_label"></label>
-            <input type="tel" id="contact_phone" name="contact_phone" required
-                   data-i18n-placeholder="q21_phone_placeholder" />
+          <div class="contact-field full" id="row-submitter-phone">
+            <label for="submitter_phone" data-i18n="q_submitter_phone_label"></label>
+            <input type="tel" id="submitter_phone" name="submitter_phone" required
+                   data-i18n-placeholder="q_submitter_phone_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>
           </div>
-          <div class="contact-field" id="row-contact-chat">
-            <label for="preferred_chat" data-i18n="q21_chat_label"></label>
-            <select id="preferred_chat" name="preferred_chat">
+        </div>
+      </div>
+
+      <!-- F2: Daily coordinator -->
+      <div class="q-row" id="row-f2" style="margin-top:32px;">
+        <p class="q-label" data-i18n="f_coordinator_heading"></p>
+        <span class="q-sublabel" data-i18n="f_coordinator_subtitle"></span>
+        <div class="pill-group" style="margin-bottom:16px;">
+          <div class="pill-item">
+            <input type="checkbox" id="same_as_above" name="same_as_above" value="yes" />
+            <label for="same_as_above" data-i18n="f_same_as_above_label"></label>
+          </div>
+        </div>
+        <div class="contact-grid" id="coordinator-fields">
+          <div class="contact-field" id="row-coordinator-name">
+            <label for="coordinator_name" data-i18n="q_coordinator_name_label"></label>
+            <input type="text" id="coordinator_name" name="coordinator_name" required
+                   data-i18n-placeholder="q_coordinator_name_placeholder" />
+            <span class="error-msg" data-i18n="validation_required"></span>
+          </div>
+          <div class="contact-field" id="row-coordinator-role">
+            <label for="coordinator_role" data-i18n="q_coordinator_role_label"></label>
+            <input type="text" id="coordinator_role" name="coordinator_role" required
+                   data-i18n-placeholder="q_coordinator_role_placeholder" />
+            <span class="error-msg" data-i18n="validation_required"></span>
+          </div>
+          <div class="contact-field full" id="row-coordinator-email">
+            <label for="coordinator_email" data-i18n="q_coordinator_email_label"></label>
+            <input type="email" id="coordinator_email" name="coordinator_email" required
+                   data-i18n-placeholder="q_coordinator_email_placeholder" />
+            <span class="error-msg" data-i18n="validation_email"></span>
+          </div>
+          <div class="contact-field" id="row-coordinator-phone">
+            <label for="coordinator_phone" id="coordinator-phone-label" data-i18n="q_coordinator_phone_label"></label>
+            <input type="tel" id="coordinator_phone" name="coordinator_phone" required
+                   data-i18n-placeholder="q_coordinator_phone_placeholder" />
+            <span class="error-msg" data-i18n="validation_required"></span>
+          </div>
+          <div class="contact-field" id="row-coordinator-chat">
+            <label for="coordinator_preferred_chat" data-i18n="q_coordinator_preferred_chat_label"></label>
+            <select id="coordinator_preferred_chat" name="coordinator_preferred_chat">
               <option value="" data-i18n="select_placeholder"></option>
               <option value="whatsapp" data-i18n="q21_chat_opt_whatsapp"></option>
               <option value="wechat" data-i18n="q21_chat_opt_wechat"></option>
@@ -948,6 +996,25 @@ function applyStrings() {
   updateBrandCount();
   updateProgressLabel();
   updateLangButton();
+
+  // Re-apply WeChat phone label if WeChat is still selected after language switch
+  const coordChat = document.getElementById('coordinator_preferred_chat');
+  if (coordChat && coordChat.value === 'wechat') {
+    updateCoordPhoneForWeChat(true);
+  }
+}
+
+/* ── WeChat-conditional coordinator phone label ── */
+function updateCoordPhoneForWeChat(isWeChat) {
+  const phoneLabel = document.getElementById('coordinator-phone-label');
+  const phoneInput = document.getElementById('coordinator_phone');
+  if (isWeChat) {
+    if (phoneLabel) phoneLabel.textContent = strings.q_phone_label_wechat || 'WeChat ID';
+    if (phoneInput) phoneInput.placeholder = strings.q_phone_placeholder_wechat || 'Your WeChat ID (e.g., wxid_xxxxx)';
+  } else {
+    if (phoneLabel) phoneLabel.textContent = strings.q_coordinator_phone_label || 'Phone / WhatsApp number';
+    if (phoneInput) phoneInput.placeholder = strings.q_coordinator_phone_placeholder || '+1 555 000 0000';
+  }
 }
 
 /* ── RTL / font switching ── */
@@ -1050,6 +1117,40 @@ function setupInteractivity() {
     checks.forEach(c => { if (!c.checked) c.disabled = selected >= 3; });
     updateBrandCount(selected);
   });
+
+  // F2: same_as_above checkbox — auto-fill coordinator fields from submitter
+  const sameAsAbove = document.getElementById('same_as_above');
+  if (sameAsAbove) {
+    sameAsAbove.addEventListener('change', () => {
+      const checked = sameAsAbove.checked;
+      const coordGrid = document.getElementById('coordinator-fields');
+      const fields = ['name', 'role', 'email', 'phone'];
+      if (checked) {
+        fields.forEach(f => {
+          const src = document.getElementById(`submitter_${f}`);
+          const dst = document.getElementById(`coordinator_${f}`);
+          if (src && dst) { dst.value = src.value; dst.readOnly = true; }
+        });
+        coordGrid.style.opacity = '0.5';
+        coordGrid.style.pointerEvents = 'none';
+      } else {
+        fields.forEach(f => {
+          const dst = document.getElementById(`coordinator_${f}`);
+          if (dst) { dst.value = ''; dst.readOnly = false; }
+        });
+        coordGrid.style.opacity = '1';
+        coordGrid.style.pointerEvents = '';
+      }
+    });
+  }
+
+  // F2: coordinator preferred_chat — WeChat-conditional phone label
+  const coordChat = document.getElementById('coordinator_preferred_chat');
+  if (coordChat) {
+    coordChat.addEventListener('change', () => {
+      updateCoordPhoneForWeChat(coordChat.value === 'wechat');
+    });
+  }
 }
 
 function updateBrandCount(n) {

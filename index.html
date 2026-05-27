@@ -57,7 +57,7 @@
       font-size: 12px;
       color: var(--muted);
       white-space: nowrap;
-      min-width: 90px;
+      min-width: 112px;
     }
     #progress-track {
       flex: 1;
@@ -134,7 +134,7 @@
 
     /* ── Page layout ── */
     .page-wrap {
-      max-width: 680px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 80px 24px 80px;
     }
@@ -142,17 +142,169 @@
     .page-header {
       margin-bottom: 40px;
     }
+    .header-layout {
+      display: grid;
+      gap: 28px;
+      align-items: center;
+    }
+    .header-copy {
+      min-width: 0;
+    }
     .page-header h1 {
       font-family: 'Syne', sans-serif;
       font-size: 28px;
       font-weight: 700;
       line-height: 1.25;
       margin-bottom: 12px;
+      max-width: 620px;
     }
     .page-header p {
       color: var(--muted);
       font-size: 15px;
       max-width: 560px;
+    }
+    .hero-illustration {
+      display: none;
+    }
+    .hero-illustration img {
+      display: block;
+      width: 100%;
+      max-height: 260px;
+      object-fit: contain;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .hero-illustration img.switching {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    .intake-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 7px 11px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .ui-icon,
+    .step-icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      color: var(--accent);
+    }
+    .meta-pill.saved { color: var(--accent-dark); border-color: rgba(13,148,136,0.35); }
+    .step-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 26px 0 0;
+    }
+    .step-item {
+      min-width: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+      padding: 11px 10px;
+      min-height: 84px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .step-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .step-number {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .step-title {
+      color: inherit;
+      font-weight: 500;
+      overflow-wrap: anywhere;
+    }
+    .step-item.active {
+      border-color: var(--accent);
+      background: #f0fdfa;
+      color: var(--accent-dark);
+      font-weight: 500;
+    }
+    .step-item.complete {
+      color: var(--text);
+      border-color: rgba(13,148,136,0.35);
+    }
+    .step-item.complete .step-icon { color: var(--accent-dark); }
+    .form-alert {
+      display: none;
+      margin-top: 20px;
+      padding: 12px 14px;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius);
+      background: var(--error-bg);
+      color: var(--error);
+      font-size: 14px;
+    }
+    .form-alert.visible { display: block; }
+    .form-alert button {
+      display: block;
+      margin-top: 8px;
+      color: var(--error);
+      background: none;
+      border: none;
+      font: inherit;
+      font-weight: 500;
+      text-decoration: underline;
+      cursor: pointer;
+      text-align: start;
+    }
+    .mobile-step-summary {
+      display: none;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 22px 0 0;
+      padding: 14px;
+      border: 1px solid rgba(13,148,136,0.28);
+      border-radius: var(--radius);
+      background: #f0fdfa;
+    }
+    .mobile-step-summary .step-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--accent);
+      margin-top: 1px;
+    }
+    .mobile-step-summary strong {
+      display: block;
+      color: var(--accent-dark);
+      font-size: 15px;
+      line-height: 1.25;
+    }
+    .mobile-step-summary span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 3px;
     }
 
     /* ── Sections ── */
@@ -160,8 +312,16 @@
       padding: 36px 0 0;
       border-top: 1px solid var(--border);
       margin-top: 36px;
+      display: none;
+      animation: stepIn 0.22s ease;
     }
-    .form-section:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+    .form-section.active { display: block; }
+    .form-section:first-of-type,
+    .form-section.active:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     .section-heading {
       font-family: 'Syne', sans-serif;
@@ -190,6 +350,12 @@
       font-size: 13px;
       color: var(--muted);
       margin-bottom: 10px;
+    }
+    .q-help {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: -2px 0 10px;
     }
     .req { color: var(--accent); margin-inline-start: 2px; }
 
@@ -331,10 +497,38 @@
       border-top: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
       gap: 12px;
     }
-    html[dir="rtl"] .submit-wrap { align-items: flex-end; }
+    body:not(.wizard-ready) .submit-wrap { display: none; }
+    .wizard-actions {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .nav-btn,
+    #submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+    }
+    .nav-btn {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 22px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.1s;
+    }
+    .nav-btn:hover { border-color: var(--accent); color: var(--accent-dark); }
+    .nav-btn:active { transform: scale(0.98); }
+    .nav-btn[hidden],
+    #submit-btn[hidden] { display: none; }
 
     #submit-btn {
       font-family: var(--font-body);
@@ -357,17 +551,71 @@
       font-size: 13px;
       color: var(--muted);
     }
+    .review-list {
+      display: grid;
+      gap: 14px;
+    }
+    .review-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .review-card h3 {
+      font-size: 16px;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .review-card dl {
+      display: grid;
+      gap: 8px;
+    }
+    .review-card dt {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .review-card dd {
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .review-edit {
+      margin-top: 12px;
+      color: var(--accent-dark);
+      background: none;
+      border: none;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: underline;
+    }
 
     /* ── Conditional fields ── */
-    .conditional { display: none; }
-    .conditional.visible { display: block; }
+    .conditional,
+    .other-input-wrap {
+      display: block;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      margin-top: 0;
+      transition: max-height 0.22s ease, opacity 0.22s ease, margin-top 0.22s ease;
+    }
+    .conditional.visible,
+    .other-input-wrap.visible {
+      max-height: 340px;
+      opacity: 1;
+      margin-top: 10px;
+    }
 
     /* ── Desktop scale-up ── */
     @media (min-width: 768px) {
       body { font-size: 22px; }
 
       #progress-bar-wrap { padding: 14px 30px; gap: 18px; }
-      #progress-label { font-size: 16px; min-width: 132px; }
+      #progress-label { font-size: 16px; min-width: 168px; }
       #progress-track { height: 8px; }
 
       #lang-btn { gap: 10px; font-size: 16px; padding: 9px 16px; }
@@ -376,11 +624,24 @@
       .lang-option img { width: 28px; }
       #lang-dropdown { min-width: 192px; }
 
-      .page-wrap { max-width: 820px; padding: 110px 48px 100px; }
+      .page-wrap { max-width: 1080px; padding: 110px 48px 100px; }
 
       .page-header { margin-bottom: 64px; }
       .page-header h1 { font-size: 46px; margin-bottom: 18px; }
       .page-header p { font-size: 20px; max-width: 680px; }
+      .header-layout {
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 46px;
+      }
+      .hero-illustration { display: block; }
+      .intake-meta { font-size: 16px; gap: 12px; }
+      .meta-pill { min-height: 42px; padding: 9px 14px; }
+      .ui-icon { width: 20px; height: 20px; }
+      .step-list { grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 34px; }
+      .step-item { font-size: 14px; padding: 13px; min-height: 106px; }
+      .step-icon { width: 22px; height: 22px; }
+      .step-number { font-size: 12px; }
+      .form-alert { font-size: 17px; padding: 16px 18px; }
 
       .form-section { padding: 68px 0 0; margin-top: 68px; }
 
@@ -390,6 +651,7 @@
       .q-row { margin-bottom: 40px; }
       .q-label { font-size: 20px; margin-bottom: 12px; }
       .q-sublabel { font-size: 17px; margin-bottom: 16px; }
+      .q-help { font-size: 16px; margin-bottom: 16px; }
 
       input[type="text"],
       input[type="email"],
@@ -421,15 +683,56 @@
       .contact-grid { gap: 26px; }
 
       .submit-wrap { margin-top: 72px; padding-top: 52px; gap: 18px; }
+      .nav-btn { font-size: 20px; min-height: 64px; padding: 18px 34px; }
       #submit-btn { font-size: 22px; padding: 20px 48px; }
       .required-note { font-size: 16px; }
+      .review-list { gap: 18px; }
+      .review-card { padding: 20px; }
+      .review-card h3 { font-size: 22px; }
+      .review-card dt { font-size: 15px; }
+      .review-card dd { font-size: 18px; }
+      .review-edit { font-size: 17px; }
     }
 
     /* ── Mobile ── */
     @media (max-width: 767px) {
-      .page-wrap { padding: 70px 16px 60px; }
-      .page-header h1 { font-size: 22px; }
+      body { background: #f3f4f2; }
+      #progress-bar-wrap { padding: 8px 12px; }
+      #progress-label { min-width: 0; max-width: 148px; overflow: hidden; text-overflow: ellipsis; }
+      .page-wrap {
+        max-width: 390px;
+        padding: 72px 14px 60px;
+      }
+      .page-header {
+        margin-bottom: 26px;
+      }
+      .page-header h1 { font-size: 22px; margin-bottom: 8px; }
       .section-heading { font-size: 19px; }
+      .page-header p { line-height: 1.5; font-size: 14px; }
+      .intake-meta {
+        margin-top: 14px;
+        gap: 8px;
+      }
+      .meta-pill {
+        min-height: 34px;
+        padding: 7px 10px;
+      }
+      .mobile-step-summary { display: flex; }
+      .step-list {
+        display: none;
+      }
+      .form-section {
+        padding-top: 28px;
+        margin-top: 28px;
+      }
+      .section-heading,
+      .section-sub {
+        display: none;
+      }
+      .q-row { margin-bottom: 22px; }
+      .q-label { font-size: 14px; margin-bottom: 7px; }
+      .q-help,
+      .q-sublabel { font-size: 12px; margin-bottom: 9px; }
 
       input[type="text"],
       input[type="email"],
@@ -438,17 +741,33 @@
       textarea,
       select {
         font-size: 16px; /* prevents iOS zoom */
-        padding: 12px 14px;
-        min-height: 48px;
+        padding: 10px 13px;
+        min-height: 44px;
       }
-      textarea { min-height: 90px; }
+      textarea { min-height: 82px; }
 
       .contact-grid { grid-template-columns: 1fr; }
       .contact-field.full { grid-column: 1; }
 
-      .pill-item label { padding: 9px 16px; min-height: 40px; display: flex; align-items: center; }
+      .pill-group { gap: 7px; }
+      .pill-item label { padding: 8px 13px; min-height: 38px; display: flex; align-items: center; font-size: 13px; }
 
-      #submit-btn { width: 100%; justify-content: center; }
+      .submit-wrap {
+        position: sticky;
+        bottom: 0;
+        z-index: 80;
+        margin: 24px -14px -60px;
+        padding: 10px 14px 14px;
+        background: rgba(250,250,248,0.96);
+        border-top: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+      }
+      .required-note { font-size: 12px; }
+      .wizard-actions { align-items: center; }
+      .nav-btn,
+      #submit-btn { min-height: 44px; padding: 10px 14px; }
+      #next-btn,
+      #submit-btn { flex: 1; }
     }
   </style>
 </head>
@@ -472,8 +791,22 @@
 <!-- ── Form ── -->
 <div class="page-wrap">
   <div class="page-header">
-    <h1 data-i18n="page_title"></h1>
-    <p data-i18n="page_intro"></p>
+    <div class="header-layout">
+      <div class="header-copy">
+        <h1 data-i18n="page_title"></h1>
+        <p data-i18n="page_intro"></p>
+      </div>
+      <div class="hero-illustration" aria-hidden="true">
+        <img id="step-illustration" src="assets/img/undraw-business-plan.svg" alt="" />
+      </div>
+    </div>
+    <div class="intake-meta" aria-live="polite">
+      <span class="meta-pill"><span class="ui-icon" data-icon="clock" aria-hidden="true"></span><span data-i18n="estimate_time"></span></span>
+      <span class="meta-pill saved"><span class="ui-icon" data-icon="save" aria-hidden="true"></span><span id="draft-status" data-i18n="autosave_ready"></span></span>
+    </div>
+    <div class="mobile-step-summary" id="mobile-step-summary" aria-live="polite"></div>
+    <ol class="step-list" id="step-list" aria-label="Form steps"></ol>
+    <div class="form-alert" id="form-alert" role="alert" aria-live="assertive" tabindex="-1"></div>
   </div>
 
   <form id="intake-form"
@@ -917,12 +1250,23 @@
       </div>
     </div><!-- /section F -->
 
+    <!-- Review -->
+    <div class="form-section review-section" id="review-section" data-section="7">
+      <h2 class="section-heading" data-i18n="review_title"></h2>
+      <p class="section-sub" data-i18n="review_subtitle"></p>
+      <div class="review-list" id="review-list"></div>
+    </div>
+
     <!-- Submit -->
     <div class="submit-wrap">
       <p class="required-note" data-i18n="required_note"></p>
-      <button type="submit" id="submit-btn">
-        <span id="submit-label" data-i18n="submit_button"></span>
-      </button>
+      <div class="wizard-actions">
+        <button type="button" class="nav-btn" id="back-btn" data-i18n="back_button"></button>
+        <button type="button" class="nav-btn" id="next-btn" data-i18n="next_button"></button>
+        <button type="submit" id="submit-btn" hidden>
+          <span id="submit-label" data-i18n="submit_button"></span>
+        </button>
+      </div>
     </div>
 
   </form>
@@ -943,15 +1287,67 @@ const LANGS = {
 /* ── State ── */
 let currentLang = 'en';
 let strings = {};
+let currentStep = 0;
+let saveTimer;
+const STORAGE_KEY = 'ameen_intake_form_draft_v2';
+const sections = Array.from(document.querySelectorAll('.form-section'));
+const totalSteps = sections.length;
+const STEP_TITLE_KEYS = [
+  'section_a_title',
+  'section_b_title',
+  'section_c_title',
+  'section_d_title',
+  'section_e_title',
+  'section_f_title',
+  'review_title'
+];
+const STEP_ICONS = ['building-2', 'users', 'search', 'map-pinned', 'target', 'contact', 'clipboard-check'];
+const STEP_ILLUSTRATIONS = [
+  'assets/img/undraw-business-plan.svg',
+  'assets/img/undraw-customer-survey.svg',
+  'assets/img/undraw-all-the-data.svg',
+  'assets/img/undraw-mobile-apps.svg',
+  'assets/img/undraw-charts.svg',
+  'assets/img/undraw-selecting-team.svg',
+  'assets/img/undraw-all-checked.svg'
+];
+const HELP_KEYS = {
+  'row-q3': 'q3_help',
+  'row-q6': 'q6_help',
+  'row-q7': 'q7_help',
+  'row-q8': 'q8_help',
+  'row-q9': 'q9_help',
+  'row-q10': 'q10_help',
+  'row-q11': 'q11_help',
+  'row-q12': 'q12_help',
+  'row-q14': 'q14_help',
+  'row-q17': 'q17_help',
+  'row-q18': 'q18_help',
+  'row-q20': 'q20_help'
+};
+const ICONS = {
+  'building-2': '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M6 12H4a2 2 0 0 0-2 2v8"/><path d="M18 9h2a2 2 0 0 1 2 2v11"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>',
+  'users': '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  'search': '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>',
+  'map-pinned': '<path d="M18 8c0 4.5-6 10-6 10S6 12.5 6 8a6 6 0 0 1 12 0Z"/><circle cx="12" cy="8" r="2"/><path d="M8.84 14H5l-3 8h20l-3-8h-3.84"/>',
+  'target': '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  'contact': '<path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><rect width="18" height="18" x="3" y="4" rx="2"/><circle cx="12" cy="14" r="2"/><path d="M8 20a4 4 0 0 1 8 0"/>',
+  'clipboard-check': '<rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
+  'clock': '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+  'save': '<path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8A2 2 0 0 1 21 8.8V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7H7v7"/><path d="M7 3v5h8"/>'
+};
 
 /* ── Init ── */
 (async function init() {
   setHiddenFields();
+  setupHelperText();
   await loadLang(detectLang());
   buildLangDropdown();
   setupInteractivity();
-  setupProgressBar();
+  setupAutosave();
+  setupWizard();
   setupForm();
+  document.body.classList.add('wizard-ready');
 })();
 
 /* ── Detect language ── */
@@ -996,6 +1392,9 @@ function applyStrings() {
   updateBrandCount();
   updateProgressLabel();
   updateLangButton();
+  renderStaticIcons();
+  updateWizardUI(false);
+  if (currentStep === totalSteps - 1) buildReview();
 
   // Re-apply WeChat phone label if WeChat is still selected after language switch
   const coordChat = document.getElementById('coordinator_preferred_chat');
@@ -1025,7 +1424,6 @@ function applyDir() {
   document.documentElement.setAttribute('dir', dir);
   document.body.style.direction = dir;
   document.body.style.fontFamily = meta.font_family || "'Outfit', sans-serif";
-  window.requestAnimationFrame(() => window.scrollTo(0, 0));
 }
 
 /* ── Build dropdown ── */
@@ -1036,9 +1434,18 @@ function buildLangDropdown() {
     const div = document.createElement('div');
     div.className = 'lang-option' + (l.code === currentLang ? ' active' : '');
     div.setAttribute('role', 'option');
+    div.setAttribute('tabindex', '0');
+    div.setAttribute('aria-selected', l.code === currentLang ? 'true' : 'false');
     div.setAttribute('data-lang', l.code);
     div.innerHTML = `<img src="https://flagcdn.com/w40/${l.flag}.png" alt="${l.code}" /><span dir="auto">${l.code === 'en' ? 'English' : l.code === 'ar' ? 'العربية' : '中文'}</span>`;
     div.addEventListener('click', () => { selectLang(l.code); closeDropdown(); });
+    div.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selectLang(l.code);
+        closeDropdown();
+      }
+    });
     dd.appendChild(div);
   });
 }
@@ -1048,13 +1455,16 @@ function updateLangButton() {
   document.getElementById('lang-flag').src = `https://flagcdn.com/w40/${lc.flag}.png`;
   document.getElementById('lang-label').textContent = lc.short;
   document.querySelectorAll('.lang-option').forEach(el => {
-    el.classList.toggle('active', el.getAttribute('data-lang') === currentLang);
+    const active = el.getAttribute('data-lang') === currentLang;
+    el.classList.toggle('active', active);
+    el.setAttribute('aria-selected', active ? 'true' : 'false');
   });
 }
 
 async function selectLang(code) {
   await loadLang(code);
   document.getElementById('field-language').value = code;
+  updateDraftStatus('language_changed');
 }
 
 /* ── Dropdown toggle ── */
@@ -1065,6 +1475,20 @@ langBtn.addEventListener('click', e => {
   e.stopPropagation();
   const open = langDd.classList.toggle('open');
   langBtn.setAttribute('aria-expanded', open);
+  if (open) {
+    const active = langDd.querySelector('.lang-option.active') || langDd.querySelector('.lang-option');
+    if (active) active.focus();
+  }
+});
+
+langBtn.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    langDd.classList.add('open');
+    langBtn.setAttribute('aria-expanded', 'true');
+    const active = langDd.querySelector('.lang-option.active') || langDd.querySelector('.lang-option');
+    if (active) active.focus();
+  }
 });
 
 function closeDropdown() {
@@ -1073,6 +1497,9 @@ function closeDropdown() {
 }
 
 document.addEventListener('click', () => closeDropdown());
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDropdown();
+});
 
 /* ── Hidden fields ── */
 function setHiddenFields() {
@@ -1083,64 +1510,61 @@ function setHiddenFields() {
   document.getElementById('field-language').value = currentLang;
 }
 
+function setupHelperText() {
+  Object.entries(HELP_KEYS).forEach(([rowId, key]) => {
+    const row = document.getElementById(rowId);
+    if (!row || row.querySelector(`[data-i18n="${key}"]`)) return;
+    const anchor = row.querySelector('.q-sublabel') || row.querySelector('.q-label');
+    if (!anchor) return;
+    const help = document.createElement('span');
+    help.className = 'q-help';
+    help.setAttribute('data-i18n', key);
+    anchor.insertAdjacentElement('afterend', help);
+  });
+}
+
+function iconSvg(name) {
+  const paths = ICONS[name];
+  if (!paths) return '';
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+}
+
+function renderStaticIcons() {
+  document.querySelectorAll('[data-icon]').forEach(el => {
+    el.innerHTML = iconSvg(el.getAttribute('data-icon'));
+  });
+}
+
 /* ── Interactivity ── */
 function setupInteractivity() {
   // Q13 testimonials conditional
   document.querySelectorAll('[name="testimonials_status"]').forEach(r => {
-    r.addEventListener('change', () => {
-      const show = r.value === 'have_written' && r.checked;
-      document.getElementById('row-q13b').classList.toggle('visible', show);
-    });
+    r.addEventListener('change', syncConditionalFields);
   });
 
   // Q19 ads conditional
   document.querySelectorAll('[name="currently_run_ads"]').forEach(r => {
-    r.addEventListener('change', () => {
-      const show = r.value === 'yes_running' && r.checked;
-      document.getElementById('row-q19b').classList.toggle('visible', show);
-    });
+    r.addEventListener('change', syncConditionalFields);
   });
 
   // Checkbox "other" reveals
   document.querySelectorAll('[data-reveals]').forEach(cb => {
-    cb.addEventListener('change', () => {
-      const target = document.getElementById(cb.getAttribute('data-reveals'));
-      if (target) target.classList.toggle('visible', cb.checked);
-    });
+    cb.addEventListener('change', syncConditionalFields);
   });
 
   // Q17 brand personality max 3
   const bpGroup = document.getElementById('q17-group');
-  bpGroup.addEventListener('change', () => {
-    const checks = bpGroup.querySelectorAll('input[type="checkbox"]');
-    const selected = Array.from(checks).filter(c => c.checked).length;
-    checks.forEach(c => { if (!c.checked) c.disabled = selected >= 3; });
-    updateBrandCount(selected);
-  });
+  bpGroup.addEventListener('change', updateBrandPersonalityLimit);
 
   // F2: same_as_above checkbox — auto-fill coordinator fields from submitter
   const sameAsAbove = document.getElementById('same_as_above');
   if (sameAsAbove) {
-    sameAsAbove.addEventListener('change', () => {
-      const checked = sameAsAbove.checked;
-      const coordGrid = document.getElementById('coordinator-fields');
-      const fields = ['name', 'role', 'email', 'phone'];
-      if (checked) {
-        fields.forEach(f => {
-          const src = document.getElementById(`submitter_${f}`);
-          const dst = document.getElementById(`coordinator_${f}`);
-          if (src && dst) { dst.value = src.value; dst.readOnly = true; }
-        });
-        coordGrid.style.opacity = '0.5';
-        coordGrid.style.pointerEvents = 'none';
-      } else {
-        fields.forEach(f => {
-          const dst = document.getElementById(`coordinator_${f}`);
-          if (dst) { dst.value = ''; dst.readOnly = false; }
-        });
-        coordGrid.style.opacity = '1';
-        coordGrid.style.pointerEvents = '';
-      }
+    sameAsAbove.addEventListener('change', () => syncSameAsAbove(true));
+    ['name', 'role', 'email', 'phone'].forEach(f => {
+      const src = document.getElementById(`submitter_${f}`);
+      if (src) src.addEventListener('input', () => {
+        if (sameAsAbove.checked) syncSameAsAbove(false);
+      });
     });
   }
 
@@ -1151,6 +1575,64 @@ function setupInteractivity() {
       updateCoordPhoneForWeChat(coordChat.value === 'wechat');
     });
   }
+
+  syncConditionalFields();
+  updateBrandPersonalityLimit();
+}
+
+function syncConditionalFields() {
+  const written = document.querySelector('[name="testimonials_status"]:checked');
+  document.getElementById('row-q13b').classList.toggle('visible', !!written && written.value === 'have_written');
+
+  const ads = document.querySelector('[name="currently_run_ads"]:checked');
+  document.getElementById('row-q19b').classList.toggle('visible', !!ads && ads.value === 'yes_running');
+
+  document.querySelectorAll('[data-reveals]').forEach(cb => {
+    const target = document.getElementById(cb.getAttribute('data-reveals'));
+    if (target) target.classList.toggle('visible', cb.checked);
+  });
+}
+
+function updateBrandPersonalityLimit() {
+  const bpGroup = document.getElementById('q17-group');
+  const checks = bpGroup.querySelectorAll('input[type="checkbox"]');
+  const selected = Array.from(checks).filter(c => c.checked).length;
+  checks.forEach(c => { if (!c.checked) c.disabled = selected >= 3; });
+  updateBrandCount(selected);
+}
+
+function syncSameAsAbove(clearWhenUnchecked) {
+  const sameAsAbove = document.getElementById('same_as_above');
+  const coordGrid = document.getElementById('coordinator-fields');
+  if (!sameAsAbove || !coordGrid) return;
+
+  const fields = ['name', 'role', 'email', 'phone'];
+  if (sameAsAbove.checked) {
+    fields.forEach(f => {
+      const src = document.getElementById(`submitter_${f}`);
+      const dst = document.getElementById(`coordinator_${f}`);
+      if (src && dst) {
+        dst.value = src.value;
+        dst.readOnly = true;
+        clearFieldError(dst);
+      }
+    });
+    coordGrid.style.opacity = '0.55';
+    coordGrid.style.pointerEvents = 'none';
+    queueSave();
+    return;
+  }
+
+  fields.forEach(f => {
+    const dst = document.getElementById(`coordinator_${f}`);
+    if (dst) {
+      if (clearWhenUnchecked) dst.value = '';
+      dst.readOnly = false;
+    }
+  });
+  coordGrid.style.opacity = '1';
+  coordGrid.style.pointerEvents = '';
+  queueSave();
 }
 
 function updateBrandCount(n) {
@@ -1162,34 +1644,288 @@ function updateBrandCount(n) {
   el.className = 'brand-count' + (count >= 3 ? ' maxed' : '');
 }
 
-/* ── Progress bar ── */
-const sections = Array.from(document.querySelectorAll('.form-section'));
-function setupProgressBar() {
-  updateProgressLabel(1);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+/* ── Wizard, progress, review ── */
+function setupWizard() {
+  buildStepList();
+  const backBtn = document.getElementById('back-btn');
+  const nextBtn = document.getElementById('next-btn');
+  backBtn.addEventListener('click', () => goToStep(currentStep - 1));
+  nextBtn.addEventListener('click', () => {
+    const scope = sections[currentStep];
+    clearErrors(scope);
+    const errors = validate(document.getElementById('intake-form'), scope);
+    if (errors.length) {
+      showErrors(errors);
+      showFormAlert(errors);
+      focusFirstError(errors);
+      return;
+    }
+    goToStep(currentStep + 1);
+  });
+  document.querySelectorAll('.review-edit').forEach(btn => {
+    btn.addEventListener('click', () => goToStep(Number(btn.dataset.step)));
+  });
+  updateWizardUI(false);
 }
 
-function onScroll() {
-  let current = 1;
-  sections.forEach((sec, i) => {
-    const top = sec.getBoundingClientRect().top;
-    if (top < window.innerHeight * 0.5) current = i + 1;
+function buildStepList() {
+  const list = document.getElementById('step-list');
+  list.innerHTML = '';
+  STEP_TITLE_KEYS.forEach((key, index) => {
+    const item = document.createElement('li');
+    item.className = 'step-item';
+    item.setAttribute('data-step', index);
+    item.innerHTML = getStepMarkup(index);
+    list.appendChild(item);
   });
-  const pct = (current / sections.length) * 100;
-  document.getElementById('progress-fill').style.width = pct + '%';
-  updateProgressLabel(current);
+}
+
+function getStepLabel(index) {
+  const title = strings[STEP_TITLE_KEYS[index]] || '';
+  const shortTitle = title.replace(/^Your\s+/i, '').replace(/^About\s+/i, '');
+  return shortTitle;
+}
+
+function getStepMarkup(index) {
+  return `<div class="step-top"><span class="step-icon">${iconSvg(STEP_ICONS[index])}</span><span class="step-number">${index + 1}/${totalSteps}</span></div><span class="step-title">${getStepLabel(index)}</span>`;
+}
+
+function goToStep(index) {
+  if (index < 0 || index >= totalSteps) return;
+  currentStep = index;
+  hideFormAlert();
+  if (currentStep === totalSteps - 1) buildReview();
+  updateWizardUI(true);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateWizardUI(shouldFocus) {
+  const pct = ((currentStep + 1) / totalSteps) * 100;
+  const progressFill = document.getElementById('progress-fill');
+  if (progressFill) progressFill.style.width = pct + '%';
+
+  sections.forEach((section, index) => {
+    const active = index === currentStep;
+    section.classList.toggle('active', active);
+    section.setAttribute('aria-hidden', active ? 'false' : 'true');
+  });
+
+  const backBtn = document.getElementById('back-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const submitBtn = document.getElementById('submit-btn');
+  if (backBtn) backBtn.hidden = currentStep === 0;
+  if (nextBtn) nextBtn.hidden = currentStep === totalSteps - 1;
+  if (submitBtn) submitBtn.hidden = currentStep !== totalSteps - 1;
+
+  document.querySelectorAll('.step-item').forEach((item, index) => {
+    item.innerHTML = getStepMarkup(index);
+    item.classList.toggle('active', index === currentStep);
+    item.classList.toggle('complete', index < currentStep);
+  });
+
+  updateMobileStepSummary();
+  updateStepIllustration();
+  updateProgressLabel(currentStep + 1);
+  if (shouldFocus) {
+    const heading = sections[currentStep].querySelector('.section-heading');
+    if (heading) {
+      heading.setAttribute('tabindex', '-1');
+      heading.focus({ preventScroll: true });
+    }
+  }
+}
+
+function updateMobileStepSummary() {
+  const el = document.getElementById('mobile-step-summary');
+  if (!el) return;
+  const title = strings[STEP_TITLE_KEYS[currentStep]] || getStepLabel(currentStep);
+  const subKey = currentStep === totalSteps - 1 ? 'review_subtitle' : [
+    'section_a_subtitle',
+    'section_b_subtitle',
+    'section_c_subtitle',
+    'section_d_subtitle',
+    'section_e_subtitle',
+    'section_f_subtitle'
+  ][currentStep];
+  const subtitle = strings[subKey] || '';
+  el.innerHTML = `<span class="step-icon">${iconSvg(STEP_ICONS[currentStep])}</span><div><strong>${currentStep + 1}. ${title}</strong><span>${subtitle}</span></div>`;
+}
+
+function updateStepIllustration() {
+  const img = document.getElementById('step-illustration');
+  const src = STEP_ILLUSTRATIONS[currentStep];
+  if (!img || !src || img.getAttribute('src') === src) return;
+  img.classList.add('switching');
+  setTimeout(() => {
+    img.src = src;
+    img.classList.remove('switching');
+  }, 120);
 }
 
 function updateProgressLabel(n) {
   const el = document.getElementById('progress-label');
   if (!el || !strings.progress_label) return;
-  el.textContent = strings.progress_label.replace('{n}', n || 1);
+  const stepTitle = strings[STEP_TITLE_KEYS[(n || 1) - 1]] || '';
+  el.textContent = strings.progress_label
+    .replace('{n}', n || 1)
+    .replace('{total}', totalSteps)
+    .replace('{title}', stepTitle);
+}
+
+function buildReview() {
+  const list = document.getElementById('review-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  sections.slice(0, -1).forEach((section, index) => {
+    const card = document.createElement('div');
+    card.className = 'review-card';
+
+    const heading = document.createElement('h3');
+    heading.textContent = strings[STEP_TITLE_KEYS[index]] || section.querySelector('.section-heading')?.textContent || '';
+    card.appendChild(heading);
+
+    const dl = document.createElement('dl');
+    collectReviewItems(section).forEach(item => {
+      const dt = document.createElement('dt');
+      dt.textContent = item.label;
+      const dd = document.createElement('dd');
+      dd.textContent = item.value || strings.review_empty || 'Not provided';
+      dl.appendChild(dt);
+      dl.appendChild(dd);
+    });
+    card.appendChild(dl);
+
+    const edit = document.createElement('button');
+    edit.type = 'button';
+    edit.className = 'review-edit';
+    edit.dataset.step = index;
+    edit.textContent = strings.review_edit || 'Edit this section';
+    edit.addEventListener('click', () => goToStep(index));
+    card.appendChild(edit);
+
+    list.appendChild(card);
+  });
+}
+
+function collectReviewItems(section) {
+  const items = [];
+  const seen = new Set();
+  section.querySelectorAll('input, textarea, select').forEach(el => {
+    if (!el.name || el.type === 'hidden' || seen.has(el.name)) return;
+    if (el.closest('.conditional:not(.visible)') && !el.value.trim()) return;
+
+    const group = section.querySelectorAll(`[name="${CSS.escape(el.name)}"]`);
+    group.forEach(node => seen.add(node.name));
+
+    const label = getFieldLabel(el);
+    const value = getFieldValue(el, group);
+    if (label) items.push({ label, value });
+  });
+  return items;
+}
+
+function getFieldLabel(el) {
+  const contactLabel = el.closest('.contact-field')?.querySelector('label');
+  if (contactLabel) return contactLabel.textContent.trim();
+  const rowLabel = el.closest('.q-row')?.querySelector('.q-label');
+  return rowLabel ? rowLabel.textContent.replace('*', '').trim() : el.name;
+}
+
+function getFieldValue(el, group) {
+  if (el.type === 'radio') {
+    const checked = Array.from(group).find(node => node.checked);
+    return checked ? getChoiceLabel(checked) : '';
+  }
+  if (el.type === 'checkbox') {
+    return Array.from(group).filter(node => node.checked).map(getChoiceLabel).join(', ');
+  }
+  if (el.tagName === 'SELECT') {
+    return el.selectedIndex > 0 ? el.options[el.selectedIndex].textContent.trim() : '';
+  }
+  return el.value.trim();
+}
+
+function getChoiceLabel(el) {
+  const label = document.querySelector(`label[for="${CSS.escape(el.id)}"]`);
+  return label ? label.textContent.trim() : el.value;
+}
+
+/* ── Autosave ── */
+function setupAutosave() {
+  restoreDraft();
+  const form = document.getElementById('intake-form');
+  form.querySelectorAll('input, textarea, select').forEach(el => {
+    if (el.type === 'hidden') return;
+    el.addEventListener('input', queueSave);
+    el.addEventListener('change', queueSave);
+  });
+  updateDraftStatus('ready');
+}
+
+function queueSave() {
+  clearTimeout(saveTimer);
+  updateDraftStatus('saving');
+  saveTimer = setTimeout(saveDraft, 250);
+}
+
+function saveDraft() {
+  const data = {};
+  document.querySelectorAll('#intake-form input, #intake-form textarea, #intake-form select').forEach(el => {
+    if (!el.name || el.type === 'hidden') return;
+    if (el.type === 'checkbox' || el.type === 'radio') {
+      data[el.id || el.name + el.value] = el.checked;
+    } else {
+      data[el.id || el.name] = el.value;
+    }
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  updateDraftStatus('saved');
+}
+
+function restoreDraft() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    document.querySelectorAll('#intake-form input, #intake-form textarea, #intake-form select').forEach(el => {
+      if (!el.name || el.type === 'hidden') return;
+      const key = el.id || el.name;
+      if (!(key in data)) return;
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        el.checked = !!data[key];
+      } else {
+        el.value = data[key];
+      }
+    });
+    syncConditionalFields();
+    updateBrandPersonalityLimit();
+    syncSameAsAbove(false);
+    updateCoordPhoneForWeChat(document.getElementById('coordinator_preferred_chat')?.value === 'wechat');
+    updateDraftStatus('restored');
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+}
+
+function updateDraftStatus(state) {
+  const el = document.getElementById('draft-status');
+  if (!el || !strings) return;
+  const key = {
+    ready: 'autosave_ready',
+    saving: 'autosave_saving',
+    saved: 'autosave_saved',
+    restored: 'autosave_restored',
+    language_changed: 'autosave_language_changed'
+  }[state] || 'autosave_ready';
+  el.textContent = strings[key] || el.textContent;
 }
 
 /* ── Form validation & submission ── */
 function setupForm() {
-  document.getElementById('intake-form').addEventListener('submit', handleSubmit);
+  const form = document.getElementById('intake-form');
+  form.addEventListener('submit', handleSubmit);
+  setupLiveValidation(form);
 }
 
 function handleSubmit(e) {
@@ -1198,10 +1934,14 @@ function handleSubmit(e) {
   clearErrors(form);
   const errors = validate(form);
   if (errors.length) {
+    const firstSection = sections.findIndex(sec => sec.contains(errors[0].row || errors[0].el));
+    if (firstSection >= 0) {
+      currentStep = firstSection;
+      updateWizardUI(false);
+    }
     showErrors(errors);
-    const first = errors[0].el;
-    first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => first.focus(), 400);
+    showFormAlert(errors);
+    focusFirstError(errors);
     return;
   }
   // Update hidden language field at submit time
@@ -1223,24 +1963,48 @@ async function submitForm(form) {
       headers: { 'Accept': 'application/json' }
     });
     if (res.ok) {
+      localStorage.removeItem(STORAGE_KEY);
       window.location.href = `thank-you.html?lang=${currentLang}`;
     } else {
       btn.disabled = false;
       lbl.textContent = strings.submit_button || 'Submit';
-      alert('Something went wrong. Please try again.');
+      showFormAlert([], strings.submit_error || 'Something went wrong. Please try again.');
     }
   } catch {
     btn.disabled = false;
     lbl.textContent = strings.submit_button || 'Submit';
-    alert('Network error. Please check your connection and try again.');
+    showFormAlert([], strings.network_error || 'Network error. Please check your connection and try again.');
   }
 }
 
-function validate(form) {
+function setupLiveValidation(form) {
+  form.querySelectorAll('input, textarea, select').forEach(el => {
+    if (el.type === 'hidden') return;
+    const eventName = el.type === 'radio' || el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'blur';
+    el.addEventListener(eventName, () => validateRowFor(el));
+    el.addEventListener('input', () => {
+      const row = el.closest('.q-row, .contact-field');
+      if (row && row.classList.contains('field-error')) validateRowFor(el);
+    });
+  });
+}
+
+function validateRowFor(el) {
+  const row = el.closest('.q-row, .contact-field');
+  if (!row) return;
+  clearErrors(row);
+  const errors = validate(document.getElementById('intake-form'), row);
+  if (errors.length) showErrors(errors);
+  else hideFormAlert();
+}
+
+function validate(form, scope) {
   const errors = [];
+  const root = scope || form;
 
   // Required text / textarea / select / url inputs
-  form.querySelectorAll('[required]').forEach(el => {
+  root.querySelectorAll('[required]').forEach(el => {
+    if (el.disabled) return;
     if (el.type === 'radio' || el.type === 'checkbox') return;
     if (!el.value.trim()) {
       errors.push({ el, row: el.closest('.q-row, .contact-field'), type: 'required' });
@@ -1255,9 +2019,10 @@ function validate(form) {
     { name: 'currently_run_ads', row: 'row-q19' },
     { name: 'team_structure', row: 'row-q22' }
   ].forEach(({ name, row }) => {
+    const rowEl = document.getElementById(row);
+    if (scope && !scope.contains(rowEl)) return;
     const checked = form.querySelector(`[name="${name}"]:checked`);
     if (!checked) {
-      const rowEl = document.getElementById(row);
       const el = form.querySelector(`[name="${name}"]`);
       errors.push({ el, row: rowEl, type: 'required' });
     }
@@ -1269,9 +2034,10 @@ function validate(form) {
     { name: 'platforms', row: 'row-q16' },
     { name: 'brand_personality', row: 'row-q17' }
   ].forEach(({ name, row }) => {
+    const rowEl = document.getElementById(row);
+    if (scope && !scope.contains(rowEl)) return;
     const checked = form.querySelectorAll(`[name="${name}"]:checked`);
     if (!checked.length) {
-      const rowEl = document.getElementById(row);
       const el = form.querySelector(`[name="${name}"]`);
       errors.push({ el, row: rowEl, type: 'at_least_1' });
     }
@@ -1279,7 +2045,8 @@ function validate(form) {
 
   // Q17 max 3 (belt + suspenders — UI already prevents > 3)
   const bpChecked = form.querySelectorAll('[name="brand_personality"]:checked');
-  if (bpChecked.length > 3) {
+  const bpRow = document.getElementById('row-q17');
+  if (bpChecked.length > 3 && (!scope || scope.contains(bpRow))) {
     const rowEl = document.getElementById('row-q17');
     errors.push({ el: bpChecked[0], row: rowEl, type: 'max_3' });
   }
@@ -1289,6 +2056,13 @@ function validate(form) {
 
 function clearErrors(form) {
   form.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+  form.querySelectorAll('[aria-invalid="true"]').forEach(el => el.removeAttribute('aria-invalid'));
+}
+
+function clearFieldError(el) {
+  const row = el.closest('.q-row, .contact-field');
+  if (row) row.classList.remove('field-error');
+  el.removeAttribute('aria-invalid');
 }
 
 function showErrors(errors) {
@@ -1296,6 +2070,7 @@ function showErrors(errors) {
     const container = row || el.closest('.q-row') || el.closest('.contact-field');
     if (container) {
       container.classList.add('field-error');
+      if (el) el.setAttribute('aria-invalid', 'true');
       const msgEl = container.querySelector('.error-msg');
       if (msgEl) {
         const key = type === 'email' ? 'validation_email'
@@ -1306,6 +2081,43 @@ function showErrors(errors) {
       }
     }
   });
+}
+
+function showFormAlert(errors, override) {
+  const alert = document.getElementById('form-alert');
+  if (!alert) return;
+  alert.innerHTML = '';
+  alert.classList.add('visible');
+
+  const message = document.createElement('div');
+  if (override) {
+    message.textContent = override;
+  } else {
+    const count = errors.length;
+    message.textContent = (strings.validation_summary || 'Please fix {n} field(s) before continuing.').replace('{n}', count);
+  }
+  alert.appendChild(message);
+
+  if (errors.length) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = strings.validation_jump || 'Go to the first issue';
+    btn.addEventListener('click', () => focusFirstError(errors));
+    alert.appendChild(btn);
+  }
+  alert.focus({ preventScroll: true });
+}
+
+function hideFormAlert() {
+  const alert = document.getElementById('form-alert');
+  if (alert) alert.classList.remove('visible');
+}
+
+function focusFirstError(errors) {
+  if (!errors.length) return;
+  const first = errors[0].el;
+  first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => first.focus(), 300);
 }
 </script>
 </body>

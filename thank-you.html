@@ -6,7 +6,7 @@
   <title>Thank You</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Outfit:wght@400;500&family=Noto+Kufi+Arabic:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Outfit:wght@400;500&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,10 +16,12 @@
       --text: #1a1a1a;
       --muted: #6b6b6b;
       --border: #e5e5e5;
+      --font-body: 'Outfit', sans-serif;
+      --font-heading: 'Syne', sans-serif;
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
+      font-family: var(--font-body);
       background: var(--bg);
       color: var(--text);
       font-size: 16px;
@@ -54,7 +56,7 @@
     }
 
     h1 {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-heading);
       font-size: 26px;
       font-weight: 700;
       line-height: 1.3;
@@ -162,9 +164,13 @@
       }
 
       const meta = strings._meta || {};
+      const bodyFont = meta.font_family || "'Outfit', sans-serif";
+      const headingFont = lang === 'en' ? "'Syne', sans-serif" : bodyFont;
       document.documentElement.setAttribute('lang', lang);
       document.documentElement.setAttribute('dir', meta.dir || 'ltr');
-      document.body.style.fontFamily = meta.font_family || "'Outfit', sans-serif";
+      document.documentElement.style.setProperty('--font-body', bodyFont);
+      document.documentElement.style.setProperty('--font-heading', headingFont);
+      document.body.style.fontFamily = bodyFont;
       document.title = strings.thank_you_title || 'Thank You';
 
       document.getElementById('ty-title').textContent =

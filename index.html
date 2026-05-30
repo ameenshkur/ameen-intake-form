@@ -462,6 +462,50 @@
       pointer-events: none;
     }
 
+    .plain-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      max-width: 760px;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+    .plain-check input[type="checkbox"] {
+      appearance: none;
+      flex: 0 0 auto;
+      display: grid;
+      place-content: center;
+      width: 22px;
+      height: 22px;
+      margin-top: 1px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+    }
+    .plain-check input[type="checkbox"]::before {
+      content: "";
+      width: 13px;
+      height: 13px;
+      transform: scale(0);
+      transition: transform 0.12s ease;
+      background: var(--accent);
+      clip-path: polygon(14% 44%, 0 58%, 38% 96%, 100% 20%, 86% 7%, 36% 67%);
+    }
+    .plain-check input[type="checkbox"]:checked {
+      border-color: var(--accent);
+      background: var(--pill-active);
+    }
+    .plain-check input[type="checkbox"]:checked::before {
+      transform: scale(1);
+    }
+    .plain-check input[type="checkbox"]:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(13,148,136,0.2);
+    }
+
     /* ── Brand count badge ── */
     .brand-count {
       font-size: 13px;
@@ -819,6 +863,8 @@
     <input type="hidden" name="plan" id="field-plan" value="unknown" />
     <input type="hidden" name="submission_date" id="field-date" />
     <input type="hidden" name="language" id="field-language" value="en" />
+    <input type="hidden" name="intake_schema_version" value="mena_b2b_v4_1" />
+    <input type="hidden" name="_subject" id="field-subject" value="New MENA Strategy Intake" />
 
     <!-- ══ SECTION A ══ -->
     <div class="form-section" data-section="1">
@@ -1022,72 +1068,102 @@
       <h2 class="section-heading" data-i18n="section_d_title"></h2>
       <p class="section-sub" data-i18n="section_d_subtitle"></p>
 
-      <!-- Q15 markets -->
+      <!-- Q15 buyer type -->
       <div class="q-row" id="row-q15">
         <label class="q-label">
           <span data-i18n="q15_label"></span><span class="req">*</span>
         </label>
         <div class="pill-group" id="q15-group">
-          <div class="pill-item"><input type="checkbox" name="markets" id="m-iraq" value="iraq_kurdistan" /><label for="m-iraq" data-i18n="q15_opt_iraq_kurdistan"></label></div>
-          <div class="pill-item"><input type="checkbox" name="markets" id="m-uae" value="uae_gulf" /><label for="m-uae" data-i18n="q15_opt_uae_gulf"></label></div>
-          <div class="pill-item"><input type="checkbox" name="markets" id="m-mena" value="wider_mena" /><label for="m-mena" data-i18n="q15_opt_wider_mena"></label></div>
-          <div class="pill-item"><input type="checkbox" name="markets" id="m-china" value="mainland_china" /><label for="m-china" data-i18n="q15_opt_mainland_china"></label></div>
-          <div class="pill-item"><input type="checkbox" name="markets" id="m-diaspora" value="chinese_diaspora" /><label for="m-diaspora" data-i18n="q15_opt_chinese_diaspora"></label></div>
-          <div class="pill-item"><input type="checkbox" name="markets" id="m-europe" value="europe" /><label for="m-europe" data-i18n="q15_opt_europe"></label></div>
-          <div class="pill-item"><input type="checkbox" name="markets" id="m-na" value="north_america" /><label for="m-na" data-i18n="q15_opt_north_america"></label></div>
-          <div class="pill-item"><input type="checkbox" name="markets" id="m-other" value="other" data-reveals="q15-other" /><label for="m-other" data-i18n="q15_opt_other"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-importers" value="importers" /><label for="bt-importers" data-i18n="q15_opt_importers"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-distributors" value="distributors" /><label for="bt-distributors" data-i18n="q15_opt_distributors"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-wholesalers" value="wholesalers" /><label for="bt-wholesalers" data-i18n="q15_opt_wholesalers"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-retail" value="retail_shops" /><label for="bt-retail" data-i18n="q15_opt_retail_shops"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-construction" value="construction_companies" /><label for="bt-construction" data-i18n="q15_opt_construction_companies"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-contractors" value="contractors_project_buyers" /><label for="bt-contractors" data-i18n="q15_opt_contractors"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-designers" value="interior_designers_architects" /><label for="bt-designers" data-i18n="q15_opt_designers"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-government" value="government_tender_buyers" /><label for="bt-government" data-i18n="q15_opt_government"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-consumers" value="end_consumers" /><label for="bt-consumers" data-i18n="q15_opt_end_consumers"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-not-sure" value="not_sure" /><label for="bt-not-sure" data-i18n="q15_opt_not_sure"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_buyer_type" id="bt-other" value="other" data-reveals="q15-other" /><label for="bt-other" data-i18n="q15_opt_other"></label></div>
         </div>
         <div class="other-input-wrap" id="q15-other">
-          <input type="text" name="markets_other" data-i18n-placeholder="q15_other_placeholder" />
+          <input type="text" name="target_buyer_type_other" data-i18n-placeholder="q15_other_placeholder" />
         </div>
         <span class="error-msg" data-i18n="validation_at_least_1"></span>
       </div>
 
-      <!-- Q16 platforms -->
+      <!-- Q16 export status -->
       <div class="q-row" id="row-q16">
         <label class="q-label">
           <span data-i18n="q16_label"></span><span class="req">*</span>
         </label>
-        <div class="pill-group" id="q16-group">
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-ig" value="instagram" /><label for="p-ig" data-i18n="q16_opt_instagram"></label></div>
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-fb" value="facebook" /><label for="p-fb" data-i18n="q16_opt_facebook"></label></div>
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-tt" value="tiktok" /><label for="p-tt" data-i18n="q16_opt_tiktok"></label></div>
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-wc" value="wechat" /><label for="p-wc" data-i18n="q16_opt_wechat"></label></div>
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-xhs" value="xiaohongshu" /><label for="p-xhs" data-i18n="q16_opt_xiaohongshu"></label></div>
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-dy" value="douyin" /><label for="p-dy" data-i18n="q16_opt_douyin"></label></div>
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-wb" value="weibo" /><label for="p-wb" data-i18n="q16_opt_weibo"></label></div>
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-li" value="linkedin" /><label for="p-li" data-i18n="q16_opt_linkedin"></label></div>
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-yt" value="youtube" /><label for="p-yt" data-i18n="q16_opt_youtube"></label></div>
-          <div class="pill-item"><input type="checkbox" name="platforms" id="p-other" value="other" data-reveals="q16-other" /><label for="p-other" data-i18n="q16_opt_other"></label></div>
+        <div class="pill-group" id="q16-group" role="radiogroup">
+          <div class="pill-item"><input type="radio" name="export_status" id="export-mena" value="already_export_mena" required /><label for="export-mena" data-i18n="q16_opt_already_export_mena"></label></div>
+          <div class="pill-item"><input type="radio" name="export_status" id="export-not-strong" value="export_not_strong_mena" /><label for="export-not-strong" data-i18n="q16_opt_export_not_strong_mena"></label></div>
+          <div class="pill-item"><input type="radio" name="export_status" id="export-inquiries" value="mena_inquiries_no_stable_clients" /><label for="export-inquiries" data-i18n="q16_opt_mena_inquiries"></label></div>
+          <div class="pill-item"><input type="radio" name="export_status" id="export-no" value="do_not_export_mena_yet" /><label for="export-no" data-i18n="q16_opt_do_not_export_mena"></label></div>
+          <div class="pill-item"><input type="radio" name="export_status" id="export-not-sure" value="not_sure" /><label for="export-not-sure" data-i18n="q16_opt_not_sure"></label></div>
         </div>
-        <div class="other-input-wrap" id="q16-other">
-          <input type="text" name="platforms_other" data-i18n-placeholder="q16_other_placeholder" />
+        <span class="error-msg" data-i18n="validation_required"></span>
+      </div>
+
+      <!-- Q17 MOQ -->
+      <div class="q-row" id="row-q17">
+        <label class="q-label" for="moq_or_order_size">
+          <span data-i18n="q17_label"></span>
+        </label>
+        <input type="text" id="moq_or_order_size" name="moq_or_order_size"
+               data-i18n-placeholder="q17_placeholder" />
+      </div>
+
+      <!-- Q18 target countries -->
+      <div class="q-row" id="row-q18">
+        <label class="q-label">
+          <span data-i18n="q18_label"></span><span class="req">*</span>
+        </label>
+        <div class="pill-group" id="q18-group">
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-iraq" value="iraq_kurdistan" /><label for="tc-iraq" data-i18n="q18_opt_iraq_kurdistan"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-uae" value="uae" /><label for="tc-uae" data-i18n="q18_opt_uae"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-saudi" value="saudi_arabia" /><label for="tc-saudi" data-i18n="q18_opt_saudi"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-qatar" value="qatar" /><label for="tc-qatar" data-i18n="q18_opt_qatar"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-kuwait" value="kuwait" /><label for="tc-kuwait" data-i18n="q18_opt_kuwait"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-oman" value="oman" /><label for="tc-oman" data-i18n="q18_opt_oman"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-jordan" value="jordan" /><label for="tc-jordan" data-i18n="q18_opt_jordan"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-turkey" value="turkey" /><label for="tc-turkey" data-i18n="q18_opt_turkey"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-wider-mena" value="wider_mena" /><label for="tc-wider-mena" data-i18n="q18_opt_wider_mena"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-not-sure" value="not_sure" /><label for="tc-not-sure" data-i18n="q18_opt_not_sure"></label></div>
+          <div class="pill-item"><input type="checkbox" name="target_mena_countries" id="tc-other" value="other" data-reveals="q18-other" /><label for="tc-other" data-i18n="q18_opt_other"></label></div>
+        </div>
+        <div class="other-input-wrap" id="q18-other">
+          <input type="text" name="target_mena_countries_other" data-i18n-placeholder="q18_other_placeholder" />
         </div>
         <span class="error-msg" data-i18n="validation_at_least_1"></span>
       </div>
 
-      <!-- Q17 brand personality -->
-      <div class="q-row" id="row-q17">
+      <!-- Q19 proof -->
+      <div class="q-row" id="row-q19">
         <label class="q-label">
-          <span data-i18n="q17_label"></span><span class="req">*</span>
+          <span data-i18n="q19_label"></span>
         </label>
-        <span class="q-sublabel" data-i18n="q17_sublabel"></span>
-        <div class="pill-group" id="q17-group">
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-lux" value="luxurious" /><label for="bp-lux" data-i18n="q17_opt_luxurious"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-play" value="playful" /><label for="bp-play" data-i18n="q17_opt_playful"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-edu" value="educational" /><label for="bp-edu" data-i18n="q17_opt_educational"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-bold" value="bold" /><label for="bp-bold" data-i18n="q17_opt_bold"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-min" value="minimal" /><label for="bp-min" data-i18n="q17_opt_minimal"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-warm" value="warm" /><label for="bp-warm" data-i18n="q17_opt_warm"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-auth" value="authoritative" /><label for="bp-auth" data-i18n="q17_opt_authoritative"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-youth" value="youthful" /><label for="bp-youth" data-i18n="q17_opt_youthful"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-trad" value="traditional" /><label for="bp-trad" data-i18n="q17_opt_traditional"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-mod" value="modern" /><label for="bp-mod" data-i18n="q17_opt_modern"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-spi" value="spiritual" /><label for="bp-spi" data-i18n="q17_opt_spiritual"></label></div>
-          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-irr" value="irreverent" /><label for="bp-irr" data-i18n="q17_opt_irreverent"></label></div>
+        <div class="pill-group" id="q19-group">
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-factory" value="factory_photos_videos" /><label for="proof-factory" data-i18n="q19_opt_factory"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-product" value="product_photos_videos" /><label for="proof-product" data-i18n="q19_opt_product"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-certificates" value="certificates" /><label for="proof-certificates" data-i18n="q19_opt_certificates"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-tests" value="test_reports" /><label for="proof-tests" data-i18n="q19_opt_tests"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-testimonials" value="client_testimonials" /><label for="proof-testimonials" data-i18n="q19_opt_testimonials"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-cases" value="case_studies_past_projects" /><label for="proof-cases" data-i18n="q19_opt_cases"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-export" value="export_documents_shipping_proof" /><label for="proof-export" data-i18n="q19_opt_export_docs"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-loading" value="container_loading_photos" /><label for="proof-loading" data-i18n="q19_opt_loading"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-exhibition" value="exhibition_booth_photos" /><label for="proof-exhibition" data-i18n="q19_opt_exhibition"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-catalog" value="catalog_brochure" /><label for="proof-catalog" data-i18n="q19_opt_catalog"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-price-list" value="price_list" /><label for="proof-price-list" data-i18n="q19_opt_price_list"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-demo" value="product_comparison_demo_videos" /><label for="proof-demo" data-i18n="q19_opt_demo"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-none" value="none_yet" /><label for="proof-none" data-i18n="q19_opt_none"></label></div>
+          <div class="pill-item"><input type="checkbox" name="proof_available" id="proof-other" value="other" data-reveals="q19-other" /><label for="proof-other" data-i18n="q19_opt_other"></label></div>
         </div>
-        <div class="brand-count" id="brand-count-display"></div>
-        <span class="error-msg" data-i18n="validation_at_least_1"></span>
+        <div class="other-input-wrap" id="q19-other">
+          <input type="text" name="proof_available_other" data-i18n-placeholder="q19_other_placeholder" />
+        </div>
       </div>
     </div><!-- /section D -->
 
@@ -1096,59 +1172,76 @@
       <h2 class="section-heading" data-i18n="section_e_title"></h2>
       <p class="section-sub" data-i18n="section_e_subtitle"></p>
 
-      <!-- Q18 -->
-      <div class="q-row" id="row-q18">
-        <label class="q-label" for="primary_goal">
-          <span data-i18n="q18_label"></span><span class="req">*</span>
-        </label>
-        <select id="primary_goal" name="primary_goal" required>
-          <option value="" data-i18n="select_placeholder"></option>
-          <option value="more_leads" data-i18n="q18_opt_more_leads"></option>
-          <option value="more_sales" data-i18n="q18_opt_more_sales"></option>
-          <option value="brand_awareness" data-i18n="q18_opt_brand_awareness"></option>
-          <option value="launch_product" data-i18n="q18_opt_launch_product"></option>
-          <option value="enter_market" data-i18n="q18_opt_enter_market"></option>
-          <option value="build_community" data-i18n="q18_opt_build_community"></option>
-        </select>
-        <span class="error-msg" data-i18n="validation_required"></span>
-      </div>
-
-      <!-- Q19 -->
-      <div class="q-row" id="row-q19">
-        <label class="q-label">
-          <span data-i18n="q19_label"></span><span class="req">*</span>
-        </label>
-        <div class="pill-group" role="radiogroup">
-          <div class="pill-item"><input type="radio" name="currently_run_ads" id="ads-yes" value="yes_running" required /><label for="ads-yes" data-i18n="q19_opt_yes_running"></label></div>
-          <div class="pill-item"><input type="radio" name="currently_run_ads" id="ads-no-int" value="no_interested" /><label for="ads-no-int" data-i18n="q19_opt_no_interested"></label></div>
-          <div class="pill-item"><input type="radio" name="currently_run_ads" id="ads-no-not" value="no_not_interested" /><label for="ads-no-not" data-i18n="q19_opt_no_not_interested"></label></div>
-        </div>
-        <span class="error-msg" data-i18n="validation_required"></span>
-
-        <!-- Q19b conditional -->
-        <div class="conditional q-row" id="row-q19b" style="margin-top:16px; margin-bottom:0;">
-          <label class="q-label" for="which_ad_platforms">
-            <span data-i18n="q19b_label"></span>
-          </label>
-          <input type="text" id="which_ad_platforms" name="which_ad_platforms"
-                 data-i18n-placeholder="q19b_placeholder" />
-        </div>
-      </div>
-
-      <!-- Q20 -->
+      <!-- Q20 current platforms -->
       <div class="q-row" id="row-q20">
-        <label class="q-label" for="ad_budget">
-          <span data-i18n="q20_label"></span><span class="req">*</span>
+        <label class="q-label">
+          <span data-i18n="q20_label"></span>
         </label>
-        <select id="ad_budget" name="ad_budget" required>
-          <option value="" data-i18n="select_placeholder"></option>
-          <option value="none_yet" data-i18n="q20_opt_none_yet"></option>
-          <option value="100_to_300" data-i18n="q20_opt_100_to_300"></option>
-          <option value="300_to_1000" data-i18n="q20_opt_300_to_1000"></option>
-          <option value="1000_to_3000" data-i18n="q20_opt_1000_to_3000"></option>
-          <option value="3000_plus" data-i18n="q20_opt_3000_plus"></option>
-        </select>
-        <span class="error-msg" data-i18n="validation_required"></span>
+        <div class="pill-group" id="q20-group">
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-website" value="company_website" /><label for="cp-website" data-i18n="q20_opt_website"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-alibaba" value="alibaba" /><label for="cp-alibaba" data-i18n="q20_opt_alibaba"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-made-in-china" value="made_in_china" /><label for="cp-made-in-china" data-i18n="q20_opt_made_in_china"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-global-sources" value="global_sources" /><label for="cp-global-sources" data-i18n="q20_opt_global_sources"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-wechat" value="wechat" /><label for="cp-wechat" data-i18n="q20_opt_wechat"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-douyin" value="douyin" /><label for="cp-douyin" data-i18n="q20_opt_douyin"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-weibo" value="weibo" /><label for="cp-weibo" data-i18n="q20_opt_weibo"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-red" value="xiaohongshu_red" /><label for="cp-red" data-i18n="q20_opt_xiaohongshu"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-facebook" value="facebook" /><label for="cp-facebook" data-i18n="q20_opt_facebook"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-instagram" value="instagram" /><label for="cp-instagram" data-i18n="q20_opt_instagram"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-tiktok" value="tiktok" /><label for="cp-tiktok" data-i18n="q20_opt_tiktok"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-linkedin" value="linkedin" /><label for="cp-linkedin" data-i18n="q20_opt_linkedin"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-youtube" value="youtube" /><label for="cp-youtube" data-i18n="q20_opt_youtube"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-other" value="other" data-reveals="q20-other" /><label for="cp-other" data-i18n="q20_opt_other"></label></div>
+        </div>
+        <div class="other-input-wrap" id="q20-other">
+          <input type="text" name="current_platforms_other" data-i18n-placeholder="q20_other_placeholder" />
+        </div>
+      </div>
+
+      <!-- Q21 managed platforms -->
+      <div class="q-row" id="row-q21">
+        <label class="q-label">
+          <span data-i18n="q21_label"></span><span class="req">*</span>
+        </label>
+        <div class="pill-group" id="q21-group">
+          <div class="pill-item"><input type="checkbox" name="managed_mena_platforms" id="mp-facebook" value="facebook" /><label for="mp-facebook" data-i18n="q21_opt_facebook"></label></div>
+          <div class="pill-item"><input type="checkbox" name="managed_mena_platforms" id="mp-instagram" value="instagram" /><label for="mp-instagram" data-i18n="q21_opt_instagram"></label></div>
+          <div class="pill-item"><input type="checkbox" name="managed_mena_platforms" id="mp-tiktok" value="tiktok" /><label for="mp-tiktok" data-i18n="q21_opt_tiktok"></label></div>
+          <div class="pill-item"><input type="checkbox" name="managed_mena_platforms" id="mp-linkedin" value="linkedin" /><label for="mp-linkedin" data-i18n="q21_opt_linkedin"></label></div>
+          <div class="pill-item"><input type="checkbox" name="managed_mena_platforms" id="mp-youtube" value="youtube" /><label for="mp-youtube" data-i18n="q21_opt_youtube"></label></div>
+          <div class="pill-item"><input type="checkbox" name="managed_mena_platforms" id="mp-website" value="website_landing_page" /><label for="mp-website" data-i18n="q21_opt_website"></label></div>
+          <div class="pill-item"><input type="checkbox" name="managed_mena_platforms" id="mp-whatsapp" value="whatsapp_lead_path" /><label for="mp-whatsapp" data-i18n="q21_opt_whatsapp"></label></div>
+          <div class="pill-item"><input type="checkbox" name="managed_mena_platforms" id="mp-not-sure" value="not_sure_need_recommendation" /><label for="mp-not-sure" data-i18n="q21_opt_not_sure"></label></div>
+          <div class="pill-item"><input type="checkbox" name="managed_mena_platforms" id="mp-other" value="other" data-reveals="q21-other" /><label for="mp-other" data-i18n="q21_opt_other"></label></div>
+        </div>
+        <div class="other-input-wrap" id="q21-other">
+          <input type="text" name="managed_mena_platforms_other" data-i18n-placeholder="q21_other_placeholder" />
+        </div>
+        <span class="error-msg" data-i18n="validation_at_least_1"></span>
+      </div>
+
+      <!-- Q22 brand personality -->
+      <div class="q-row" id="row-q22">
+        <label class="q-label">
+          <span data-i18n="q22_label"></span>
+        </label>
+        <span class="q-sublabel" data-i18n="q22_sublabel"></span>
+        <div class="pill-group" id="q22-group">
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-lux" value="luxurious" /><label for="bp-lux" data-i18n="q22_opt_luxurious"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-play" value="playful" /><label for="bp-play" data-i18n="q22_opt_playful"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-edu" value="educational" /><label for="bp-edu" data-i18n="q22_opt_educational"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-bold" value="bold" /><label for="bp-bold" data-i18n="q22_opt_bold"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-min" value="minimal" /><label for="bp-min" data-i18n="q22_opt_minimal"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-warm" value="warm" /><label for="bp-warm" data-i18n="q22_opt_warm"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-auth" value="authoritative" /><label for="bp-auth" data-i18n="q22_opt_authoritative"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-youth" value="youthful" /><label for="bp-youth" data-i18n="q22_opt_youthful"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-trad" value="traditional" /><label for="bp-trad" data-i18n="q22_opt_traditional"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-mod" value="modern" /><label for="bp-mod" data-i18n="q22_opt_modern"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-spi" value="spiritual" /><label for="bp-spi" data-i18n="q22_opt_spiritual"></label></div>
+          <div class="pill-item"><input type="checkbox" name="brand_personality" id="bp-irr" value="irreverent" /><label for="bp-irr" data-i18n="q22_opt_irreverent"></label></div>
+        </div>
+        <div class="brand-count" id="brand-count-display"></div>
+        <span class="error-msg" data-i18n="validation_max_3"></span>
       </div>
     </div><!-- /section E -->
 
@@ -1156,6 +1249,149 @@
     <div class="form-section" data-section="6">
       <h2 class="section-heading" data-i18n="section_f_title"></h2>
       <p class="section-sub" data-i18n="section_f_subtitle"></p>
+
+      <!-- Q23 -->
+      <div class="q-row" id="row-q23">
+        <label class="q-label" for="primary_goal">
+          <span data-i18n="q23_label"></span><span class="req">*</span>
+        </label>
+        <select id="primary_goal" name="primary_goal" required>
+          <option value="" data-i18n="select_placeholder"></option>
+          <option value="more_leads" data-i18n="q23_opt_more_leads"></option>
+          <option value="more_sales" data-i18n="q23_opt_more_sales"></option>
+          <option value="brand_awareness" data-i18n="q23_opt_brand_awareness"></option>
+          <option value="launch_product" data-i18n="q23_opt_launch_product"></option>
+          <option value="enter_market" data-i18n="q23_opt_enter_market"></option>
+          <option value="build_community" data-i18n="q23_opt_build_community"></option>
+        </select>
+        <span class="error-msg" data-i18n="validation_required"></span>
+      </div>
+
+      <!-- Q24 -->
+      <div class="q-row" id="row-q24">
+        <label class="q-label">
+          <span data-i18n="q24_label"></span><span class="req">*</span>
+        </label>
+        <div class="pill-group" role="radiogroup">
+          <div class="pill-item"><input type="radio" name="currently_run_ads" id="ads-yes" value="yes_running" required /><label for="ads-yes" data-i18n="q24_opt_yes_running"></label></div>
+          <div class="pill-item"><input type="radio" name="currently_run_ads" id="ads-no-int" value="no_interested" /><label for="ads-no-int" data-i18n="q24_opt_no_interested"></label></div>
+          <div class="pill-item"><input type="radio" name="currently_run_ads" id="ads-no-not" value="no_not_interested" /><label for="ads-no-not" data-i18n="q24_opt_no_not_interested"></label></div>
+        </div>
+        <span class="error-msg" data-i18n="validation_required"></span>
+
+        <!-- Q24b conditional -->
+        <div class="conditional q-row" id="row-q24b" style="margin-top:16px; margin-bottom:0;">
+          <label class="q-label" for="which_ad_platforms">
+            <span data-i18n="q24b_label"></span>
+          </label>
+          <input type="text" id="which_ad_platforms" name="which_ad_platforms"
+                 data-i18n-placeholder="q24b_placeholder" />
+        </div>
+      </div>
+
+      <!-- Q25 -->
+      <div class="q-row" id="row-q25">
+        <label class="q-label" for="ad_budget">
+          <span data-i18n="q25_label"></span><span class="req">*</span>
+        </label>
+        <select id="ad_budget" name="ad_budget" required>
+          <option value="" data-i18n="select_placeholder"></option>
+          <option value="none_yet" data-i18n="q25_opt_none_yet"></option>
+          <option value="100_to_300" data-i18n="q25_opt_100_to_300"></option>
+          <option value="300_to_1000" data-i18n="q25_opt_300_to_1000"></option>
+          <option value="1000_to_3000" data-i18n="q25_opt_1000_to_3000"></option>
+          <option value="3000_plus" data-i18n="q25_opt_3000_plus"></option>
+        </select>
+        <span class="error-msg" data-i18n="validation_required"></span>
+      </div>
+
+      <!-- Q26 -->
+      <div class="q-row" id="row-q26">
+        <label class="q-label">
+          <span data-i18n="q26_label"></span><span class="req">*</span>
+        </label>
+        <div class="pill-group" role="radiogroup">
+          <div class="pill-item"><input type="radio" name="ad_payment_responsibility" id="adpay-company" value="company_pays_directly" required /><label for="adpay-company" data-i18n="q26_opt_company"></label></div>
+          <div class="pill-item"><input type="radio" name="ad_payment_responsibility" id="adpay-help" value="need_help_setting_up_payment" /><label for="adpay-help" data-i18n="q26_opt_help"></label></div>
+          <div class="pill-item"><input type="radio" name="ad_payment_responsibility" id="adpay-not-sure" value="not_sure_yet" /><label for="adpay-not-sure" data-i18n="q26_opt_not_sure"></label></div>
+          <div class="pill-item"><input type="radio" name="ad_payment_responsibility" id="adpay-no-ads" value="not_planning_paid_ads" /><label for="adpay-no-ads" data-i18n="q26_opt_no_ads"></label></div>
+        </div>
+        <span class="error-msg" data-i18n="validation_required"></span>
+      </div>
+
+      <!-- Q27 -->
+      <div class="q-row" id="row-q27">
+        <label class="plain-check" for="service_fee_ad_spend_acknowledgement">
+          <input type="checkbox" name="service_fee_ad_spend_acknowledgement" id="service_fee_ad_spend_acknowledgement" value="yes" required />
+          <span>
+            <span data-i18n="q27_label"></span><span class="req">*</span>
+          </span>
+        </label>
+        <span class="error-msg" data-i18n="validation_required"></span>
+      </div>
+    </div><!-- /section F -->
+
+    <!-- ══ SECTION G ══ -->
+    <div class="form-section" data-section="7">
+      <h2 class="section-heading" data-i18n="section_g_title"></h2>
+      <p class="section-sub" data-i18n="section_g_subtitle"></p>
+
+      <!-- Q28 -->
+      <div class="q-row" id="row-q28">
+        <label class="q-label">
+          <span data-i18n="q28_label"></span><span class="req">*</span>
+        </label>
+        <div class="pill-group" role="radiogroup">
+          <div class="pill-item"><input type="radio" name="lead_followup_owner" id="follow-owner" value="owner_founder" required /><label for="follow-owner" data-i18n="q28_opt_owner"></label></div>
+          <div class="pill-item"><input type="radio" name="lead_followup_owner" id="follow-sales" value="sales_team" /><label for="follow-sales" data-i18n="q28_opt_sales"></label></div>
+          <div class="pill-item"><input type="radio" name="lead_followup_owner" id="follow-coordinator" value="assigned_coordinator" /><label for="follow-coordinator" data-i18n="q28_opt_coordinator"></label></div>
+          <div class="pill-item"><input type="radio" name="lead_followup_owner" id="follow-scripts" value="scripts_prepared_team_replies" /><label for="follow-scripts" data-i18n="q28_opt_scripts"></label></div>
+          <div class="pill-item"><input type="radio" name="lead_followup_owner" id="follow-not-sure" value="not_sure_yet" /><label for="follow-not-sure" data-i18n="q28_opt_not_sure"></label></div>
+        </div>
+        <span class="error-msg" data-i18n="validation_required"></span>
+      </div>
+
+      <!-- Q29 -->
+      <div class="q-row" id="row-q29">
+        <label class="q-label">
+          <span data-i18n="q29_label"></span><span class="req">*</span>
+        </label>
+        <div class="pill-group" role="radiogroup">
+          <div class="pill-item"><input type="radio" name="lead_response_speed" id="speed-15" value="within_15_minutes" required /><label for="speed-15" data-i18n="q29_opt_15"></label></div>
+          <div class="pill-item"><input type="radio" name="lead_response_speed" id="speed-1h" value="within_1_hour" /><label for="speed-1h" data-i18n="q29_opt_1h"></label></div>
+          <div class="pill-item"><input type="radio" name="lead_response_speed" id="speed-same-day" value="same_business_day" /><label for="speed-same-day" data-i18n="q29_opt_same_day"></label></div>
+          <div class="pill-item"><input type="radio" name="lead_response_speed" id="speed-1-2-days" value="1_to_2_days" /><label for="speed-1-2-days" data-i18n="q29_opt_1_2_days"></label></div>
+          <div class="pill-item"><input type="radio" name="lead_response_speed" id="speed-not-sure" value="not_sure" /><label for="speed-not-sure" data-i18n="q29_opt_not_sure"></label></div>
+        </div>
+        <span class="error-msg" data-i18n="validation_required"></span>
+      </div>
+
+      <!-- Q30 -->
+      <div class="q-row" id="row-q30">
+        <label class="q-label">
+          <span data-i18n="q30_label"></span>
+        </label>
+        <div class="pill-group">
+          <div class="pill-item"><input type="checkbox" name="sales_materials_ready" id="sm-catalog" value="product_catalog" /><label for="sm-catalog" data-i18n="q30_opt_catalog"></label></div>
+          <div class="pill-item"><input type="checkbox" name="sales_materials_ready" id="sm-price-list" value="price_list" /><label for="sm-price-list" data-i18n="q30_opt_price_list"></label></div>
+          <div class="pill-item"><input type="checkbox" name="sales_materials_ready" id="sm-profile" value="company_profile" /><label for="sm-profile" data-i18n="q30_opt_profile"></label></div>
+          <div class="pill-item"><input type="checkbox" name="sales_materials_ready" id="sm-scripts" value="whatsapp_reply_scripts" /><label for="sm-scripts" data-i18n="q30_opt_scripts"></label></div>
+          <div class="pill-item"><input type="checkbox" name="sales_materials_ready" id="sm-faq" value="faq_document" /><label for="sm-faq" data-i18n="q30_opt_faq"></label></div>
+          <div class="pill-item"><input type="checkbox" name="sales_materials_ready" id="sm-quote" value="quotation_template" /><label for="sm-quote" data-i18n="q30_opt_quote"></label></div>
+          <div class="pill-item"><input type="checkbox" name="sales_materials_ready" id="sm-media" value="product_photos_videos" /><label for="sm-media" data-i18n="q30_opt_media"></label></div>
+          <div class="pill-item"><input type="checkbox" name="sales_materials_ready" id="sm-none" value="none_yet" /><label for="sm-none" data-i18n="q30_opt_none"></label></div>
+          <div class="pill-item"><input type="checkbox" name="sales_materials_ready" id="sm-other" value="other" data-reveals="q30-other" /><label for="sm-other" data-i18n="q30_opt_other"></label></div>
+        </div>
+        <div class="other-input-wrap" id="q30-other">
+          <input type="text" name="sales_materials_ready_other" data-i18n-placeholder="q30_other_placeholder" />
+        </div>
+      </div>
+    </div><!-- /section G -->
+
+    <!-- ══ SECTION H ══ -->
+    <div class="form-section" data-section="8">
+      <h2 class="section-heading" data-i18n="section_h_title"></h2>
+      <p class="section-sub" data-i18n="section_h_subtitle"></p>
 
       <!-- F1: Person filling the form -->
       <div class="q-row" id="row-f1">
@@ -1237,22 +1473,22 @@
         </div>
       </div>
 
-      <!-- Q22 -->
-      <div class="q-row" id="row-q22">
+      <!-- Q31 -->
+      <div class="q-row" id="row-q31">
         <label class="q-label">
-          <span data-i18n="q22_label"></span><span class="req">*</span>
+          <span data-i18n="q31_label"></span><span class="req">*</span>
         </label>
         <div class="pill-group" role="radiogroup">
-          <div class="pill-item"><input type="radio" name="team_structure" id="team-solo" value="solo_founder" required /><label for="team-solo" data-i18n="q22_opt_solo_founder"></label></div>
-          <div class="pill-item"><input type="radio" name="team_structure" id="team-one" value="one_coordinator" /><label for="team-one" data-i18n="q22_opt_one_coordinator"></label></div>
-          <div class="pill-item"><input type="radio" name="team_structure" id="team-full" value="full_team" /><label for="team-full" data-i18n="q22_opt_full_team"></label></div>
+          <div class="pill-item"><input type="radio" name="team_structure" id="team-solo" value="solo_founder" required /><label for="team-solo" data-i18n="q31_opt_solo_founder"></label></div>
+          <div class="pill-item"><input type="radio" name="team_structure" id="team-one" value="one_coordinator" /><label for="team-one" data-i18n="q31_opt_one_coordinator"></label></div>
+          <div class="pill-item"><input type="radio" name="team_structure" id="team-full" value="full_team" /><label for="team-full" data-i18n="q31_opt_full_team"></label></div>
         </div>
         <span class="error-msg" data-i18n="validation_required"></span>
       </div>
-    </div><!-- /section F -->
+    </div><!-- /section H -->
 
     <!-- Review -->
-    <div class="form-section review-section" id="review-section" data-section="7">
+    <div class="form-section review-section" id="review-section" data-section="9">
       <h2 class="section-heading" data-i18n="review_title"></h2>
       <p class="section-sub" data-i18n="review_subtitle"></p>
       <div class="review-list" id="review-list"></div>
@@ -1300,15 +1536,19 @@ const STEP_TITLE_KEYS = [
   'section_d_title',
   'section_e_title',
   'section_f_title',
+  'section_g_title',
+  'section_h_title',
   'review_title'
 ];
-const STEP_ICONS = ['building-2', 'users', 'search', 'map-pinned', 'target', 'contact', 'clipboard-check'];
+const STEP_ICONS = ['building-2', 'users', 'search', 'map-pinned', 'share-2', 'target', 'messages-square', 'contact', 'clipboard-check'];
 const STEP_ILLUSTRATIONS = [
   'assets/img/undraw-business-plan.svg',
   'assets/img/undraw-customer-survey.svg',
   'assets/img/undraw-all-the-data.svg',
+  'assets/img/undraw-logistics.svg',
   'assets/img/undraw-mobile-apps.svg',
   'assets/img/undraw-charts.svg',
+  'assets/img/undraw-manage-chats.svg',
   'assets/img/undraw-selecting-team.svg',
   'assets/img/undraw-all-checked.svg'
 ];
@@ -1323,15 +1563,20 @@ const HELP_KEYS = {
   'row-q12': 'q12_help',
   'row-q14': 'q14_help',
   'row-q17': 'q17_help',
-  'row-q18': 'q18_help',
-  'row-q20': 'q20_help'
+  'row-q20': 'q20_help',
+  'row-q21': 'q21_help',
+  'row-q22': 'q22_help',
+  'row-q23': 'q23_help',
+  'row-q25': 'q25_help'
 };
 const ICONS = {
   'building-2': '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M6 12H4a2 2 0 0 0-2 2v8"/><path d="M18 9h2a2 2 0 0 1 2 2v11"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>',
   'users': '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
   'search': '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>',
   'map-pinned': '<path d="M18 8c0 4.5-6 10-6 10S6 12.5 6 8a6 6 0 0 1 12 0Z"/><circle cx="12" cy="8" r="2"/><path d="M8.84 14H5l-3 8h20l-3-8h-3.84"/>',
+  'share-2': '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98"/><path d="m15.41 6.51-6.82 3.98"/>',
   'target': '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  'messages-square': '<path d="M14 9a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-1l-3 3v-3h-2a2 2 0 0 1-2-2v-7Z"/><path d="M10 15H6l-4 4V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2"/>',
   'contact': '<path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><rect width="18" height="18" x="3" y="4" rx="2"/><circle cx="12" cy="14" r="2"/><path d="M8 20a4 4 0 0 1 8 0"/>',
   'clipboard-check': '<rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
   'clock': '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
@@ -1547,7 +1792,7 @@ function setupInteractivity() {
     r.addEventListener('change', syncConditionalFields);
   });
 
-  // Q19 ads conditional
+  // Q24 ads conditional
   document.querySelectorAll('[name="currently_run_ads"]').forEach(r => {
     r.addEventListener('change', syncConditionalFields);
   });
@@ -1557,9 +1802,9 @@ function setupInteractivity() {
     cb.addEventListener('change', syncConditionalFields);
   });
 
-  // Q17 brand personality max 3
-  const bpGroup = document.getElementById('q17-group');
-  bpGroup.addEventListener('change', updateBrandPersonalityLimit);
+  // Q22 brand personality max 3
+  const bpGroup = document.getElementById('q22-group');
+  if (bpGroup) bpGroup.addEventListener('change', updateBrandPersonalityLimit);
 
   // F2: same_as_above checkbox — auto-fill coordinator fields from submitter
   const sameAsAbove = document.getElementById('same_as_above');
@@ -1590,7 +1835,7 @@ function syncConditionalFields() {
   document.getElementById('row-q13b').classList.toggle('visible', !!written && written.value === 'have_written');
 
   const ads = document.querySelector('[name="currently_run_ads"]:checked');
-  document.getElementById('row-q19b').classList.toggle('visible', !!ads && ads.value === 'yes_running');
+  document.getElementById('row-q24b').classList.toggle('visible', !!ads && ads.value === 'yes_running');
 
   document.querySelectorAll('[data-reveals]').forEach(cb => {
     const target = document.getElementById(cb.getAttribute('data-reveals'));
@@ -1599,7 +1844,8 @@ function syncConditionalFields() {
 }
 
 function updateBrandPersonalityLimit() {
-  const bpGroup = document.getElementById('q17-group');
+  const bpGroup = document.getElementById('q22-group');
+  if (!bpGroup) return;
   const checks = bpGroup.querySelectorAll('input[type="checkbox"]');
   const selected = Array.from(checks).filter(c => c.checked).length;
   checks.forEach(c => { if (!c.checked) c.disabled = selected >= 3; });
@@ -1644,7 +1890,7 @@ function updateBrandCount(n) {
   const el = document.getElementById('brand-count-display');
   if (!el || !strings.brand_count) return;
   const count = n !== undefined ? n :
-    document.querySelectorAll('#q17-group input:checked').length;
+    document.querySelectorAll('#q22-group input:checked').length;
   el.textContent = strings.brand_count.replace('{n}', count);
   el.className = 'brand-count' + (count >= 3 ? ' maxed' : '');
 }
@@ -1750,7 +1996,9 @@ function updateMobileStepSummary() {
     'section_c_subtitle',
     'section_d_subtitle',
     'section_e_subtitle',
-    'section_f_subtitle'
+    'section_f_subtitle',
+    'section_g_subtitle',
+    'section_h_subtitle'
   ][currentStep];
   const subtitle = strings[subKey] || '';
   el.innerHTML = `<span class="step-icon">${iconSvg(STEP_ICONS[currentStep])}</span><div><strong>${currentStep + 1}. ${title}</strong><span>${subtitle}</span></div>`;
@@ -1834,7 +2082,9 @@ function getFieldLabel(el) {
   const contactLabel = el.closest('.contact-field')?.querySelector('label');
   if (contactLabel) return contactLabel.textContent.trim();
   const rowLabel = el.closest('.q-row')?.querySelector('.q-label');
-  return rowLabel ? rowLabel.textContent.replace('*', '').trim() : el.name;
+  if (rowLabel) return rowLabel.textContent.replace('*', '').trim();
+  const ownLabel = el.id ? document.querySelector(`label[for="${CSS.escape(el.id)}"]`) : null;
+  return ownLabel ? ownLabel.textContent.replace('*', '').trim() : el.name;
 }
 
 function getFieldValue(el, group) {
@@ -1853,7 +2103,7 @@ function getFieldValue(el, group) {
 
 function getChoiceLabel(el) {
   const label = document.querySelector(`label[for="${CSS.escape(el.id)}"]`);
-  return label ? label.textContent.trim() : el.value;
+  return label ? label.textContent.replace('*', '').trim() : el.value;
 }
 
 /* ── Autosave ── */
@@ -1951,7 +2201,14 @@ function handleSubmit(e) {
   }
   // Update hidden language field at submit time
   document.getElementById('field-language').value = currentLang;
+  updateSubmissionSubject(form);
   submitForm(form);
+}
+
+function updateSubmissionSubject(form) {
+  const subject = document.getElementById('field-subject');
+  const company = form.elements.company_name?.value.trim();
+  if (subject) subject.value = company ? `New MENA Strategy Intake - ${company}` : 'New MENA Strategy Intake';
 }
 
 async function submitForm(form) {
@@ -2021,8 +2278,12 @@ function validate(form, scope) {
   // Required radio groups
   [
     { name: 'testimonials_status', row: 'row-q13' },
-    { name: 'currently_run_ads', row: 'row-q19' },
-    { name: 'team_structure', row: 'row-q22' }
+    { name: 'export_status', row: 'row-q16' },
+    { name: 'currently_run_ads', row: 'row-q24' },
+    { name: 'ad_payment_responsibility', row: 'row-q26' },
+    { name: 'lead_followup_owner', row: 'row-q28' },
+    { name: 'lead_response_speed', row: 'row-q29' },
+    { name: 'team_structure', row: 'row-q31' }
   ].forEach(({ name, row }) => {
     const rowEl = document.getElementById(row);
     if (scope && !scope.contains(rowEl)) return;
@@ -2035,9 +2296,9 @@ function validate(form, scope) {
 
   // Checkbox groups — require at least 1
   [
-    { name: 'markets', row: 'row-q15' },
-    { name: 'platforms', row: 'row-q16' },
-    { name: 'brand_personality', row: 'row-q17' }
+    { name: 'target_buyer_type', row: 'row-q15' },
+    { name: 'target_mena_countries', row: 'row-q18' },
+    { name: 'managed_mena_platforms', row: 'row-q21' }
   ].forEach(({ name, row }) => {
     const rowEl = document.getElementById(row);
     if (scope && !scope.contains(rowEl)) return;
@@ -2048,12 +2309,18 @@ function validate(form, scope) {
     }
   });
 
-  // Q17 max 3 (belt + suspenders — UI already prevents > 3)
+  // Q22 max 3 (belt + suspenders — UI already prevents > 3)
   const bpChecked = form.querySelectorAll('[name="brand_personality"]:checked');
-  const bpRow = document.getElementById('row-q17');
+  const bpRow = document.getElementById('row-q22');
   if (bpChecked.length > 3 && (!scope || scope.contains(bpRow))) {
-    const rowEl = document.getElementById('row-q17');
+    const rowEl = document.getElementById('row-q22');
     errors.push({ el: bpChecked[0], row: rowEl, type: 'max_3' });
+  }
+
+  const acknowledgementRow = document.getElementById('row-q27');
+  const acknowledgement = document.getElementById('service_fee_ad_spend_acknowledgement');
+  if (acknowledgement && !acknowledgement.checked && (!scope || scope.contains(acknowledgementRow))) {
+    errors.push({ el: acknowledgement, row: acknowledgementRow, type: 'required' });
   }
 
   return errors;

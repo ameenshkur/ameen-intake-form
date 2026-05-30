@@ -68,7 +68,15 @@ All submissions go to Formspree: **https://formspree.io/f/mbdqodoj**
 Log in at [formspree.io](https://formspree.io) to view, export, or set up email notifications for new submissions.
 
 Each submission includes:
-- All 22 questions
+- All current intake questions, including B2B/export, platform-management, ad-budget, lead follow-up, and contact sections
 - Hidden field: `plan` (from the URL parameter)
 - Hidden field: `submission_date` (ISO date, e.g. `2026-04-17`)
 - Hidden field: `language` (the language the form was submitted in: `en`, `ar`, or `zh`)
+- Hidden field: `intake_schema_version` (currently `mena_b2b_v4_1`)
+- Hidden field: `_subject` (Formspree email subject, updated with the company name at submit time)
+
+Key v4.1 field groups:
+- B2B/export: `target_buyer_type`, `target_buyer_type_other`, `export_status`, `moq_or_order_size`, `target_mena_countries`, `target_mena_countries_other`, `proof_available`, `proof_available_other`
+- Platforms: `current_platforms`, `current_platforms_other`, `managed_mena_platforms`, `managed_mena_platforms_other`
+- Ads: `ad_payment_responsibility`, `service_fee_ad_spend_acknowledgement`
+- Lead handling: `lead_followup_owner`, `lead_response_speed`, `sales_materials_ready`, `sales_materials_ready_other`

@@ -864,7 +864,13 @@
     <input type="hidden" name="submission_date" id="field-date" />
     <input type="hidden" name="language" id="field-language" value="en" />
     <input type="hidden" name="intake_schema_version" value="mena_b2b_v4_1" />
-    <input type="hidden" name="_subject" id="field-subject" value="New MENA Strategy Intake" />
+    <input type="hidden" name="subject" id="field-subject" value="New MENA Strategy Intake" />
+    <input type="hidden" name="_subject" id="field-subject-legacy" value="New MENA Strategy Intake" />
+    <input type="hidden" name="name" id="field-name" />
+    <input type="hidden" name="email" id="field-email" />
+    <input type="hidden" name="phone" id="field-phone" />
+    <input type="hidden" name="company" id="field-company" />
+    <input type="hidden" name="message" id="field-message" />
 
     <!-- ══ SECTION A ══ -->
     <div class="form-section" data-section="1">
@@ -2201,14 +2207,38 @@ function handleSubmit(e) {
   }
   // Update hidden language field at submit time
   document.getElementById('field-language').value = currentLang;
-  updateSubmissionSubject(form);
+  updateFormspreeFields(form);
   submitForm(form);
 }
 
-function updateSubmissionSubject(form) {
+function updateFormspreeFields(form) {
   const subject = document.getElementById('field-subject');
+  const legacySubject = document.getElementById('field-subject-legacy');
+  const name = document.getElementById('field-name');
+  const email = document.getElementById('field-email');
+  const phone = document.getElementById('field-phone');
+  const companyField = document.getElementById('field-company');
+  const message = document.getElementById('field-message');
+
   const company = form.elements.company_name?.value.trim();
-  if (subject) subject.value = company ? `New MENA Strategy Intake - ${company}` : 'New MENA Strategy Intake';
+  const subjectValue = company ? `New MENA Strategy Intake - ${company}` : 'New MENA Strategy Intake';
+  if (subject) subject.value = subjectValue;
+  if (legacySubject) legacySubject.value = subjectValue;
+  if (name) name.value = form.elements.submitter_name?.value.trim() || company || 'MENA intake submitter';
+  if (email) email.value = form.elements.submitter_email?.value.trim() || '';
+  if (phone) phone.value = form.elements.submitter_phone?.value.trim() || '';
+  if (companyField) companyField.value = company || '';
+  if (message) {
+    const product = form.elements.what_you_sell?.value.trim();
+    const goal = form.elements.primary_goal?.selectedOptions?.[0]?.textContent.trim();
+    const countries = Array.from(form.querySelectorAll('[name="target_mena_countries"]:checked')).map(getChoiceLabel).join(', ');
+    message.value = [
+      company ? `Company: ${company}` : '',
+      product ? `What they sell: ${product}` : '',
+      goal ? `Primary goal: ${goal}` : '',
+      countries ? `Target MENA countries: ${countries}` : ''
+    ].filter(Boolean).join('\n');
+  }
 }
 
 async function submitForm(form) {

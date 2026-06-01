@@ -2060,7 +2060,8 @@ function buildStepList() {
 }
 
 function getStepLabel(index) {
-  const title = strings[STEP_TITLE_KEYS[index]] || '';
+  const key = STEP_TITLE_KEYS[index];
+  const title = strings[key] || (key === 'welcome_step_title' ? 'Welcome' : '');
   const shortTitle = title.replace(/^Your\s+/i, '').replace(/^About\s+/i, '');
   return shortTitle;
 }

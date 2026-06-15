@@ -421,6 +421,11 @@
       margin: -2px 0 10px;
     }
     .req { color: var(--accent); margin-inline-start: 2px; }
+    .required-label::after {
+      content: "*";
+      color: var(--accent);
+      margin-inline-start: 2px;
+    }
 
     /* ── Inputs ── */
     input[type="text"],
@@ -1247,8 +1252,7 @@
         <label class="q-label" for="moq_or_order_size">
           <span data-i18n="q17_label"></span>
         </label>
-        <input type="text" id="moq_or_order_size" name="moq_or_order_size"
-               data-i18n-placeholder="q17_placeholder" />
+        <input type="text" id="moq_or_order_size" name="moq_or_order_size" />
       </div>
 
       <!-- Q18 target countries -->
@@ -1314,13 +1318,12 @@
         </label>
         <div class="pill-group" id="q20-group">
           <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-website" value="company_website" /><label for="cp-website" data-i18n="q20_opt_website"></label></div>
-          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-alibaba" value="alibaba" /><label for="cp-alibaba" data-i18n="q20_opt_alibaba"></label></div>
-          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-made-in-china" value="made_in_china" /><label for="cp-made-in-china" data-i18n="q20_opt_made_in_china"></label></div>
-          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-global-sources" value="global_sources" /><label for="cp-global-sources" data-i18n="q20_opt_global_sources"></label></div>
-          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-wechat" value="wechat" /><label for="cp-wechat" data-i18n="q20_opt_wechat"></label></div>
-          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-douyin" value="douyin" /><label for="cp-douyin" data-i18n="q20_opt_douyin"></label></div>
-          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-weibo" value="weibo" /><label for="cp-weibo" data-i18n="q20_opt_weibo"></label></div>
-          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-red" value="xiaohongshu_red" /><label for="cp-red" data-i18n="q20_opt_xiaohongshu"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-marketplace" value="marketplace_listing" /><label for="cp-marketplace" data-i18n="q20_opt_marketplace"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-b2b-directory" value="b2b_directory" /><label for="cp-b2b-directory" data-i18n="q20_opt_b2b_directory"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-messaging" value="messaging_chat_channel" /><label for="cp-messaging" data-i18n="q20_opt_messaging"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-short-video" value="short_video_platform" /><label for="cp-short-video" data-i18n="q20_opt_short_video"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-local-social" value="local_social_network" /><label for="cp-local-social" data-i18n="q20_opt_local_social"></label></div>
+          <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-community" value="community_review_platform" /><label for="cp-community" data-i18n="q20_opt_community"></label></div>
           <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-facebook" value="facebook" /><label for="cp-facebook" data-i18n="q20_opt_facebook"></label></div>
           <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-instagram" value="instagram" /><label for="cp-instagram" data-i18n="q20_opt_instagram"></label></div>
           <div class="pill-item"><input type="checkbox" name="current_platforms" id="cp-tiktok" value="tiktok" /><label for="cp-tiktok" data-i18n="q20_opt_tiktok"></label></div>
@@ -1533,25 +1536,25 @@
         <p class="q-label" data-i18n="f_submitter_heading"></p>
         <div class="contact-grid" style="margin-top:10px;">
           <div class="contact-field" id="row-submitter-name">
-            <label for="submitter_name" data-i18n="q_submitter_name_label"></label>
+            <label class="required-label" for="submitter_name" data-i18n="q_submitter_name_label"></label>
             <input type="text" id="submitter_name" name="submitter_name" required
                    data-i18n-placeholder="q_submitter_name_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>
           </div>
           <div class="contact-field" id="row-submitter-role">
-            <label for="submitter_role" data-i18n="q_submitter_role_label"></label>
+            <label class="required-label" for="submitter_role" data-i18n="q_submitter_role_label"></label>
             <input type="text" id="submitter_role" name="submitter_role" required
                    data-i18n-placeholder="q_submitter_role_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>
           </div>
           <div class="contact-field full" id="row-submitter-email">
-            <label for="submitter_email" data-i18n="q_submitter_email_label"></label>
+            <label class="required-label" for="submitter_email" data-i18n="q_submitter_email_label"></label>
             <input type="email" id="submitter_email" name="submitter_email" required
                    data-i18n-placeholder="q_submitter_email_placeholder" />
             <span class="error-msg" data-i18n="validation_email"></span>
           </div>
           <div class="contact-field full" id="row-submitter-phone">
-            <label for="submitter_phone" data-i18n="q_submitter_phone_label"></label>
+            <label class="required-label" for="submitter_phone" data-i18n="q_submitter_phone_label"></label>
             <input type="tel" id="submitter_phone" name="submitter_phone" required
                    data-i18n-placeholder="q_submitter_phone_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>
@@ -1571,25 +1574,25 @@
         </div>
         <div class="contact-grid" id="coordinator-fields">
           <div class="contact-field" id="row-coordinator-name">
-            <label for="coordinator_name" data-i18n="q_coordinator_name_label"></label>
+            <label class="required-label" for="coordinator_name" data-i18n="q_coordinator_name_label"></label>
             <input type="text" id="coordinator_name" name="coordinator_name" required
                    data-i18n-placeholder="q_coordinator_name_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>
           </div>
           <div class="contact-field" id="row-coordinator-role">
-            <label for="coordinator_role" data-i18n="q_coordinator_role_label"></label>
+            <label class="required-label" for="coordinator_role" data-i18n="q_coordinator_role_label"></label>
             <input type="text" id="coordinator_role" name="coordinator_role" required
                    data-i18n-placeholder="q_coordinator_role_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>
           </div>
           <div class="contact-field full" id="row-coordinator-email">
-            <label for="coordinator_email" data-i18n="q_coordinator_email_label"></label>
+            <label class="required-label" for="coordinator_email" data-i18n="q_coordinator_email_label"></label>
             <input type="email" id="coordinator_email" name="coordinator_email" required
                    data-i18n-placeholder="q_coordinator_email_placeholder" />
             <span class="error-msg" data-i18n="validation_email"></span>
           </div>
           <div class="contact-field" id="row-coordinator-phone">
-            <label for="coordinator_phone" id="coordinator-phone-label" data-i18n="q_coordinator_phone_label"></label>
+            <label class="required-label" for="coordinator_phone" id="coordinator-phone-label" data-i18n="q_coordinator_phone_label"></label>
             <input type="tel" id="coordinator_phone" name="coordinator_phone" required
                    data-i18n-placeholder="q_coordinator_phone_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>

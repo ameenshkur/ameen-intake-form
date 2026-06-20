@@ -293,5 +293,15 @@
   "review_empty": "未提供",
   "thank_you_title": "谢谢——我们已收到您的信息表。",
   "thank_you_body": "我们会仔细审阅所有内容，并尽快带着几个澄清问题回复您，然后再开始起草策略。优秀的策略始于清晰的沟通——期待与您交流。",
-  "thank_you_signature": "— 阿明"
+  "thank_you_signature": "— 阿明",
+  "thank_you_steps_title": "接下来会发生什么",
+  "thank_you_step_1_kicker": "已完成",
+  "thank_you_step_1_title": "信息表已提交",
+  "thank_you_step_1_body": "您的答案已收到并保存，等待审核。",
+  "thank_you_step_2_kicker": "下一步",
+  "thank_you_step_2_title": "营销策略审核",
+  "thank_you_step_2_body": "我们会研究您的信息表，了解市场、受众和目标；如需澄清，会再跟进。",
+  "thank_you_step_3_kicker": "之后",
+  "thank_you_step_3_title": "策略方向",
+  "thank_you_step_3_body": "细节明确后，我们会梳理最合适的下一步策略方向。"
 }

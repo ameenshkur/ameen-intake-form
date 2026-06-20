@@ -293,5 +293,15 @@
   "review_empty": "Not provided",
   "thank_you_title": "Thank you — your intake is received.",
   "thank_you_body": "We'll review everything carefully and come back to you as soon as possible with a few clarifying questions before we start drafting your strategy. Great strategies start with great conversations — looking forward to ours.",
-  "thank_you_signature": "— Ameen"
+  "thank_you_signature": "— Ameen",
+  "thank_you_steps_title": "What happens next",
+  "thank_you_step_1_kicker": "Completed",
+  "thank_you_step_1_title": "Intake form submitted",
+  "thank_you_step_1_body": "Your answers have been received and saved for review.",
+  "thank_you_step_2_kicker": "Next",
+  "thank_you_step_2_title": "Marketing strategy review",
+  "thank_you_step_2_body": "We study your intake to understand the market, audience, and goals, then follow up if anything needs clarification.",
+  "thank_you_step_3_kicker": "Then",
+  "thank_you_step_3_title": "Strategy direction",
+  "thank_you_step_3_body": "Once the details are clear, we outline the strongest next direction."
 }

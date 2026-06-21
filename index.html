@@ -2565,9 +2565,9 @@ async function submitForm(form) {
 }
 
 function saveThankYouContext(form) {
-  const coordinatorMethod = cleanContextValue(form.elements.coordinator_preferred_chat?.value);
   const submitterMethod = cleanContextValue(form.elements.submitter_preferred_chat?.value);
-  const contactSelect = coordinatorMethod ? form.elements.coordinator_preferred_chat : form.elements.submitter_preferred_chat;
+  const coordinatorMethod = cleanContextValue(form.elements.coordinator_preferred_chat?.value);
+  const contactSelect = submitterMethod ? form.elements.submitter_preferred_chat : form.elements.coordinator_preferred_chat;
   const context = {
     lang: currentLang,
     name: cleanContextValue(form.elements.submitter_name?.value),
@@ -2577,7 +2577,7 @@ function saveThankYouContext(form) {
     audience: cleanContextValue(getSelectedLabels(form, 'target_buyer_type').join(', ')),
     goal: cleanContextValue(form.elements.primary_goal?.value),
     goalLabel: cleanContextValue(form.elements.primary_goal?.selectedOptions?.[0]?.textContent),
-    contactMethodValue: coordinatorMethod || submitterMethod,
+    contactMethodValue: submitterMethod || coordinatorMethod,
     contactMethod: cleanContextValue(contactSelect?.selectedOptions?.[0]?.textContent)
   };
 

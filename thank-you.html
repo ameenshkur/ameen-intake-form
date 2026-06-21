@@ -113,6 +113,74 @@
       outline-offset: 3px;
     }
 
+    .qr-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(0, 0, 0, 0.68);
+    }
+
+    .qr-modal[hidden] {
+      display: none;
+    }
+
+    .qr-dialog {
+      position: relative;
+      width: min(100%, 440px);
+      padding: 22px;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+      text-align: center;
+    }
+
+    .qr-dialog h2 {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .qr-dialog p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      white-space: nowrap;
+    }
+
+    .qr-dialog img {
+      display: block;
+      width: min(100%, 260px);
+      height: auto;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .qr-close {
+      position: absolute;
+      top: 10px;
+      inset-inline-end: 10px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--text);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .qr-close:focus-visible {
+      outline: 3px solid rgba(13, 148, 136, 0.25);
+      outline-offset: 3px;
+    }
+
     .divider {
       width: 48px;
       height: 2px;
@@ -357,6 +425,9 @@
         gap: 12px;
         padding: 12px;
       }
+      .qr-dialog p {
+        white-space: normal;
+      }
     }
   </style>
 </head>
@@ -423,9 +494,26 @@
     </div>
   </div>
 
+  <div class="qr-modal" id="wechat-modal" hidden>
+    <div class="qr-dialog" role="dialog" aria-modal="true" aria-labelledby="wechat-modal-title">
+      <button class="qr-close" id="wechat-modal-close" type="button" aria-label="Close">&times;</button>
+      <h2 id="wechat-modal-title"></h2>
+      <p id="wechat-modal-body"></p>
+      <img id="wechat-modal-image" src="" alt="" />
+    </div>
+  </div>
+
   <script>
     const LANGS = { en: {}, ar: {}, zh: {} };
     const THANK_YOU_CONTEXT_KEY = 'ameen_intake_thank_you_context_v1';
+    // Fill these when you want the thank-you CTA to open a specific chat app.
+    const DIRECT_CONTACT = {
+      email: 'ameenshkur@gmail.com',
+      whatsapp: '+9647719541390',
+      telegram: '@AmeenShkur',
+      wechat: 'https://ameenshkur.github.io/assets/contact/wechat-qr.png',
+      other: '+9647719541390'
+    };
 
     async function init() {
       const params = new URLSearchParams(window.location.search);
@@ -585,18 +673,127 @@
       if (!wrap || !text || !link) return;
 
       const methodKey = getContactMethodKey(context.contactMethodValue);
-      const contactText = methodKey ? strings[`thank_you_contact_text_${methodKey}`] : '';
-      text.textContent = contactText || (context.contactMethod
-        ? fillTemplate(strings.thank_you_contact_text_method || "We'll follow up through {method}. Add details now if anything is missing.", { method: context.contactMethod })
-        : (strings.thank_you_contact_text || 'Need to add more details before we follow up?'));
-      link.textContent = strings.thank_you_contact_button || 'Open form to add details';
-      link.href = `index.html?lang=${encodeURIComponent(lang)}`;
+      const action = getDirectContactAction(strings, methodKey);
+      text.textContent = action.text;
+      link.textContent = action.button;
+      link.href = action.href;
+      link.target = action.external ? '_blank' : '';
+      link.rel = action.external ? 'noopener' : '';
+      link.dataset.modalImage = action.modalImage || '';
+      setupWeChatModal(strings);
       wrap.hidden = false;
     }
 
     function getContactMethodKey(value) {
       const allowed = ['whatsapp', 'wechat', 'telegram', 'email_only', 'other'];
       return allowed.includes(value) ? value : '';
+    }
+
+    function getDirectContactAction(strings, methodKey) {
+      const fallbackEmail = DIRECT_CONTACT.email;
+      const fallbackHref = getMailHref(fallbackEmail);
+      const fallback = {
+        text: strings.thank_you_direct_contact_text || 'Have something else to say? Contact me directly.',
+        button: strings.thank_you_direct_contact_button || 'Contact me directly',
+        href: fallbackHref,
+        external: false
+      };
+
+      if (methodKey === 'whatsapp' && DIRECT_CONTACT.whatsapp) {
+        return {
+          text: strings.thank_you_direct_contact_text_whatsapp || fallback.text,
+          button: strings.thank_you_direct_contact_button_whatsapp || fallback.button,
+          href: getWhatsAppHref(DIRECT_CONTACT.whatsapp),
+          external: true
+        };
+      }
+      if (methodKey === 'telegram' && DIRECT_CONTACT.telegram) {
+        return {
+          text: strings.thank_you_direct_contact_text_telegram || fallback.text,
+          button: strings.thank_you_direct_contact_button_telegram || fallback.button,
+          href: getTelegramHref(DIRECT_CONTACT.telegram),
+          external: true
+        };
+      }
+      if (methodKey === 'wechat' && DIRECT_CONTACT.wechat) {
+        return {
+          text: strings.thank_you_direct_contact_text_wechat || fallback.text,
+          button: strings.thank_you_direct_contact_button_wechat || fallback.button,
+          href: DIRECT_CONTACT.wechat,
+          external: false,
+          modalImage: DIRECT_CONTACT.wechat
+        };
+      }
+      if (methodKey === 'email_only' && fallbackEmail) {
+        return {
+          text: strings.thank_you_direct_contact_text_email_only || fallback.text,
+          button: strings.thank_you_direct_contact_button_email_only || fallback.button,
+          href: fallbackHref,
+          external: false
+        };
+      }
+      if (methodKey === 'other' && DIRECT_CONTACT.other) {
+        return {
+          text: strings.thank_you_direct_contact_text_other || fallback.text,
+          button: strings.thank_you_direct_contact_button_other || fallback.button,
+          href: getWhatsAppHref(DIRECT_CONTACT.other),
+          external: true
+        };
+      }
+      return fallback;
+    }
+
+    function getMailHref(email) {
+      const subject = encodeURIComponent('Extra details about my intake');
+      const body = encodeURIComponent('Hi Ameen,\n\nI wanted to add:');
+      return `mailto:${email}?subject=${subject}&body=${body}`;
+    }
+
+    function getWhatsAppHref(phone) {
+      const cleanPhone = phone.replace(/[^\d]/g, '');
+      const text = encodeURIComponent('Hi Ameen, I wanted to add something about my intake.');
+      return `https://wa.me/${cleanPhone}?text=${text}`;
+    }
+
+    function getTelegramHref(username) {
+      return `https://t.me/${username.replace(/^@/, '')}`;
+    }
+
+    function setupWeChatModal(strings) {
+      const link = document.getElementById('contact-link');
+      const modal = document.getElementById('wechat-modal');
+      const close = document.getElementById('wechat-modal-close');
+      const title = document.getElementById('wechat-modal-title');
+      const body = document.getElementById('wechat-modal-body');
+      const image = document.getElementById('wechat-modal-image');
+      if (!link || !modal || !close || !title || !body || !image) return;
+
+      title.textContent = strings.thank_you_wechat_modal_title || 'Add me on WeChat';
+      body.textContent = strings.thank_you_wechat_modal_body || 'Scan this QR code in WeChat to contact me directly.';
+      image.alt = strings.thank_you_wechat_modal_alt || 'WeChat QR code';
+
+      link.onclick = event => {
+        if (!link.dataset.modalImage) return;
+        event.preventDefault();
+        image.src = link.dataset.modalImage;
+        modal.hidden = false;
+        close.focus();
+      };
+
+      close.onclick = () => closeWeChatModal();
+      modal.onclick = event => {
+        if (event.target === modal) closeWeChatModal();
+      };
+      document.onkeydown = event => {
+        if (event.key === 'Escape' && !modal.hidden) closeWeChatModal();
+      };
+    }
+
+    function closeWeChatModal() {
+      const modal = document.getElementById('wechat-modal');
+      const link = document.getElementById('contact-link');
+      if (modal) modal.hidden = true;
+      if (link) link.focus();
     }
 
     init();

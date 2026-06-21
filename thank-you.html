@@ -79,6 +79,40 @@
       color: var(--accent);
     }
 
+    .contact-action {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 18px auto 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .contact-action[hidden] {
+      display: none;
+    }
+
+    .contact-action a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid rgba(13, 148, 136, 0.35);
+      border-radius: 999px;
+      color: var(--accent);
+      background: #ffffff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .contact-action a:focus-visible {
+      outline: 3px solid rgba(13, 148, 136, 0.25);
+      outline-offset: 3px;
+    }
+
     .divider {
       width: 48px;
       height: 2px;
@@ -223,6 +257,11 @@
         font-size: 18px;
       }
 
+      .contact-action {
+        font-size: 15px;
+        margin-top: 16px;
+      }
+
       .divider {
         width: 54px;
         margin: 18px auto 0;
@@ -329,6 +368,9 @@
       </svg>
     </div>
     <h1 id="ty-title"></h1>
+    <p class="body-text" id="ty-body"></p>
+    <p class="signature" id="ty-signature"></p>
+    <div class="divider"></div>
 
     <section class="next-steps" aria-labelledby="next-steps-title">
       <h2 id="next-steps-title"></h2>
@@ -375,13 +417,15 @@
       </div>
     </section>
 
-    <div class="divider"></div>
-    <p class="body-text" id="ty-body"></p>
-    <p class="signature" id="ty-signature"></p>
+    <div class="contact-action" id="contact-action" hidden>
+      <span id="contact-text"></span>
+      <a id="contact-link" href="index.html"></a>
+    </div>
   </div>
 
   <script>
     const LANGS = { en: {}, ar: {}, zh: {} };
+    const THANK_YOU_CONTEXT_KEY = 'ameen_intake_thank_you_context_v1';
 
     async function init() {
       const params = new URLSearchParams(window.location.search);
@@ -408,13 +452,15 @@
       document.documentElement.style.setProperty('--font-heading', headingFont);
       document.body.style.fontFamily = bodyFont;
       document.title = strings.thank_you_title || 'Thank You';
+      const context = getThankYouContext(params);
 
       document.getElementById('ty-title').textContent =
-        strings.thank_you_title || 'Thank you — your intake is received.';
+        getThankYouTitle(strings, context);
       document.getElementById('ty-body').textContent =
-        strings.thank_you_body || "We'll review everything carefully and come back to you soon.";
+        getThankYouBody(strings, context);
       document.getElementById('ty-signature').textContent =
         strings.thank_you_signature || '— Ameen / امين / ئەمین / 阿明';
+      renderContactAction(strings, lang, context);
 
       document.getElementById('next-steps-title').textContent =
         strings.thank_you_steps_title || 'What happens next';
@@ -422,17 +468,17 @@
         {
           kicker: strings.thank_you_step_1_kicker || 'Completed',
           title: strings.thank_you_step_1_title || 'Intake form submitted',
-          body: strings.thank_you_step_1_body || 'Your answers are safely received and ready for review.'
+          body: strings.thank_you_step_1_body || 'Your answers have been received and saved for review.'
         },
         {
           kicker: strings.thank_you_step_2_kicker || 'Next',
-          title: strings.thank_you_step_2_title || 'Marketing strategy review',
-          body: strings.thank_you_step_2_body || 'We study your intake to understand the market, audience, and goals, then follow up if anything needs clarification.'
+          title: getServiceReviewTitle(strings, context),
+          body: getStrategyReviewBody(strings, context)
         },
         {
           kicker: strings.thank_you_step_3_kicker || 'Then',
           title: strings.thank_you_step_3_title || 'Strategy direction',
-          body: strings.thank_you_step_3_body || 'Once the details are clear, we outline the strongest next direction for your market entry or growth plan.'
+          body: getStrategyDirectionBody(strings, context)
         }
       ];
 
@@ -442,6 +488,115 @@
         document.getElementById(`step-${number}-title`).textContent = step.title;
         document.getElementById(`step-${number}-body`).textContent = step.body;
       });
+    }
+
+    function getThankYouContext(params) {
+      let stored = {};
+      try {
+        stored = JSON.parse(localStorage.getItem(THANK_YOU_CONTEXT_KEY) || '{}');
+      } catch {
+        stored = {};
+      }
+
+      const methodValue = cleanValue(stored.contactMethodValue || params.get('contact_type'));
+      const methodLabel = cleanContactMethodLabel(stored.contactMethod || params.get('contact'), methodValue);
+
+      return {
+        name: cleanValue(stored.name || params.get('name')),
+        company: cleanValue(stored.company || params.get('company')),
+        market: cleanValue(stored.market || params.get('market')),
+        audience: cleanValue(stored.audience || params.get('audience')),
+        goal: cleanValue(stored.goal || params.get('goal')),
+        goalLabel: cleanValue(stored.goalLabel || params.get('service')),
+        contactMethodValue: methodValue,
+        contactMethod: methodLabel
+      };
+    }
+
+    function cleanValue(value) {
+      return String(value || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+    }
+
+    function cleanContactMethodLabel(value, methodValue) {
+      const label = cleanValue(value);
+      if (!methodValue || /^[-—\s]*select[-—\s]*$/i.test(label)) return '';
+      return label;
+    }
+
+    function fillTemplate(template, values) {
+      return String(template || '').replace(/\{(\w+)\}/g, (_, key) => values[key] || '');
+    }
+
+    function getThankYouTitle(strings, context) {
+      if (context.name) {
+        return fillTemplate(
+          strings.thank_you_title_named || 'Thank you, {name} — your intake is received.',
+          { name: context.name }
+        );
+      }
+      return strings.thank_you_title || 'Thank you — your intake is received.';
+    }
+
+    function getThankYouBody(strings, context) {
+      if (context.company && context.market) {
+        return fillTemplate(strings.thank_you_body_company_market, context);
+      }
+      if (context.company) {
+        return fillTemplate(strings.thank_you_body_company, context);
+      }
+      if (context.market) {
+        return fillTemplate(strings.thank_you_body_market, context);
+      }
+      return strings.thank_you_body || "We'll review everything carefully and come back to you soon.";
+    }
+
+    function getServiceReviewTitle(strings, context) {
+      const key = context.goal ? `thank_you_service_title_${context.goal}` : '';
+      return strings[key] || strings.thank_you_step_2_title || 'Marketing strategy review';
+    }
+
+    function getStrategyReviewBody(strings, context) {
+      if (context.market && context.audience) {
+        return strings.thank_you_step_2_body_market_audience || strings.thank_you_step_2_body;
+      }
+      if (context.market) {
+        return fillTemplate(strings.thank_you_step_2_body_market, context);
+      }
+      if (context.audience) {
+        return strings.thank_you_step_2_body_audience || strings.thank_you_step_2_body;
+      }
+      return strings.thank_you_step_2_body || 'We review your market, audience, and goals, then follow up if needed.';
+    }
+
+    function getStrategyDirectionBody(strings, context) {
+      if (context.company) {
+        return fillTemplate(strings.thank_you_step_3_body_company, context);
+      }
+      if (context.market) {
+        return fillTemplate(strings.thank_you_step_3_body_market, context);
+      }
+      return strings.thank_you_step_3_body || 'We share the strongest marketing direction and next steps.';
+    }
+
+    function renderContactAction(strings, lang, context) {
+      const wrap = document.getElementById('contact-action');
+      const text = document.getElementById('contact-text');
+      const link = document.getElementById('contact-link');
+      if (!wrap || !text || !link) return;
+
+      const methodKey = getContactMethodKey(context.contactMethodValue);
+      const contactText = methodKey ? strings[`thank_you_contact_text_${methodKey}`] : '';
+      text.textContent = contactText || (context.contactMethod
+        ? fillTemplate(strings.thank_you_contact_text_method || "We'll follow up through {method}. Add details now if anything is missing.", { method: context.contactMethod })
+        : (strings.thank_you_contact_text || 'Need to add more details before we follow up?'));
+      link.textContent = strings.thank_you_contact_button || 'Open form to add details';
+      link.href = `index.html?lang=${encodeURIComponent(lang)}`;
+      wrap.hidden = false;
+    }
+
+    function getContactMethodKey(value) {
+      const allowed = ['whatsapp', 'wechat', 'telegram', 'email_only', 'other'];
+      return allowed.includes(value) ? value : '';
     }
 
     init();

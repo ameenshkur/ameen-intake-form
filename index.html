@@ -458,16 +458,25 @@
     }
     textarea { resize: vertical; min-height: 80px; }
     select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b6b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%230d9488' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"),
+        linear-gradient(to left, #f0fdfa 0 46px, transparent 46px);
       background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
+      background-position: right 14px center, right center;
+      background-size: 18px 18px, 46px 100%;
+      padding-right: 58px;
       cursor: pointer;
     }
+    select:hover {
+      border-color: rgba(13, 148, 136, 0.45);
+    }
     html[dir="rtl"] select {
-      background-position: left 14px center;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%230d9488' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"),
+        linear-gradient(to right, #f0fdfa 0 46px, transparent 46px);
+      background-position: left 14px center, left center;
       padding-right: 14px;
-      padding-left: 36px;
+      padding-left: 58px;
     }
 
     /* ── Error states ── */
@@ -793,8 +802,8 @@
         padding: 16px 18px;
         min-height: 62px;
       }
-      select { padding-right: 46px; }
-      html[dir="rtl"] select { padding-right: 18px; padding-left: 46px; }
+      select { padding-right: 62px; }
+      html[dir="rtl"] select { padding-right: 18px; padding-left: 62px; }
       textarea { min-height: 130px; }
 
       .error-msg { font-size: 16px; margin-top: 8px; }
@@ -908,6 +917,8 @@
         padding: 10px 13px;
         min-height: 44px;
       }
+      select { padding-right: 56px; }
+      html[dir="rtl"] select { padding-right: 13px; padding-left: 56px; }
       textarea { min-height: 82px; }
 
       .contact-grid { grid-template-columns: 1fr; }
@@ -1553,10 +1564,22 @@
                    data-i18n-placeholder="q_submitter_email_placeholder" />
             <span class="error-msg" data-i18n="validation_email"></span>
           </div>
-          <div class="contact-field full" id="row-submitter-phone">
-            <label class="required-label" for="submitter_phone" data-i18n="q_submitter_phone_label"></label>
-            <input type="tel" id="submitter_phone" name="submitter_phone" required
-                   data-i18n-placeholder="q_submitter_phone_placeholder" />
+          <div class="contact-field" id="row-submitter-chat">
+            <label class="required-label" for="submitter_preferred_chat" data-i18n="q_submitter_preferred_chat_label"></label>
+            <select id="submitter_preferred_chat" name="submitter_preferred_chat" required>
+              <option value="" data-i18n="select_placeholder"></option>
+              <option value="whatsapp" data-i18n="q21_chat_opt_whatsapp"></option>
+              <option value="wechat" data-i18n="q21_chat_opt_wechat"></option>
+              <option value="telegram" data-i18n="q21_chat_opt_telegram"></option>
+              <option value="email_only" data-i18n="q21_chat_opt_email_only"></option>
+              <option value="other" data-i18n="q21_chat_opt_other"></option>
+            </select>
+            <span class="error-msg" data-i18n="validation_required"></span>
+          </div>
+          <div class="contact-field" id="row-submitter-phone">
+            <label class="required-label" for="submitter_phone" id="submitter-phone-label" data-i18n="q_contact_detail_label"></label>
+            <input type="text" id="submitter_phone" name="submitter_phone" required
+                   data-i18n-placeholder="q_contact_detail_placeholder" />
             <span class="error-msg" data-i18n="validation_required"></span>
           </div>
         </div>
@@ -1591,15 +1614,9 @@
                    data-i18n-placeholder="q_coordinator_email_placeholder" />
             <span class="error-msg" data-i18n="validation_email"></span>
           </div>
-          <div class="contact-field" id="row-coordinator-phone">
-            <label class="required-label" for="coordinator_phone" id="coordinator-phone-label" data-i18n="q_coordinator_phone_label"></label>
-            <input type="tel" id="coordinator_phone" name="coordinator_phone" required
-                   data-i18n-placeholder="q_coordinator_phone_placeholder" />
-            <span class="error-msg" data-i18n="validation_required"></span>
-          </div>
           <div class="contact-field" id="row-coordinator-chat">
-            <label for="coordinator_preferred_chat" data-i18n="q_coordinator_preferred_chat_label"></label>
-            <select id="coordinator_preferred_chat" name="coordinator_preferred_chat">
+            <label class="required-label" for="coordinator_preferred_chat" data-i18n="q_coordinator_preferred_chat_label"></label>
+            <select id="coordinator_preferred_chat" name="coordinator_preferred_chat" required>
               <option value="" data-i18n="select_placeholder"></option>
               <option value="whatsapp" data-i18n="q21_chat_opt_whatsapp"></option>
               <option value="wechat" data-i18n="q21_chat_opt_wechat"></option>
@@ -1607,6 +1624,13 @@
               <option value="email_only" data-i18n="q21_chat_opt_email_only"></option>
               <option value="other" data-i18n="q21_chat_opt_other"></option>
             </select>
+            <span class="error-msg" data-i18n="validation_required"></span>
+          </div>
+          <div class="contact-field" id="row-coordinator-phone">
+            <label class="required-label" for="coordinator_phone" id="coordinator-phone-label" data-i18n="q_contact_detail_label"></label>
+            <input type="text" id="coordinator_phone" name="coordinator_phone" required
+                   data-i18n-placeholder="q_contact_detail_placeholder" />
+            <span class="error-msg" data-i18n="validation_required"></span>
           </div>
         </div>
       </div>
@@ -1665,6 +1689,7 @@ let strings = {};
 let currentStep = 0;
 let saveTimer;
 const STORAGE_KEY = 'ameen_intake_form_draft_v2';
+const THANK_YOU_CONTEXT_KEY = 'ameen_intake_thank_you_context_v1';
 const sections = Array.from(document.querySelectorAll('.form-section'));
 const totalSteps = sections.length;
 const STEP_TITLE_KEYS = [
@@ -1739,6 +1764,9 @@ const ICONS = {
 
 /* ── Detect language ── */
 function detectLang() {
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get('lang');
+  if (requested && LANGS[requested]) return requested;
   const saved = localStorage.getItem('intake_lang');
   if (saved && LANGS[saved]) return saved;
   const browser = (navigator.language || 'en').toLowerCase();
@@ -1783,23 +1811,54 @@ function applyStrings() {
   updateWizardUI(false);
   if (currentStep === totalSteps - 1) buildReview();
 
-  // Re-apply WeChat phone label if WeChat is still selected after language switch
+  // Re-apply contact-detail labels after language switch.
+  const submitterChat = document.getElementById('submitter_preferred_chat');
   const coordChat = document.getElementById('coordinator_preferred_chat');
-  if (coordChat && coordChat.value === 'wechat') {
-    updateCoordPhoneForWeChat(true);
-  }
+  updateContactDetailField('submitter', submitterChat?.value || '');
+  updateContactDetailField('coordinator', coordChat?.value || '');
 }
 
-/* ── WeChat-conditional coordinator phone label ── */
-function updateCoordPhoneForWeChat(isWeChat) {
-  const phoneLabel = document.getElementById('coordinator-phone-label');
-  const phoneInput = document.getElementById('coordinator_phone');
-  if (isWeChat) {
-    if (phoneLabel) phoneLabel.textContent = strings.q_phone_label_wechat || 'WeChat ID';
-    if (phoneInput) phoneInput.placeholder = strings.q_phone_placeholder_wechat || 'Your WeChat ID (e.g., wxid_xxxxx)';
-  } else {
-    if (phoneLabel) phoneLabel.textContent = strings.q_coordinator_phone_label || 'Phone / WhatsApp number';
-    if (phoneInput) phoneInput.placeholder = strings.q_coordinator_phone_placeholder || '+1 555 000 0000';
+/* ── Preferred-chat conditional contact detail ── */
+function updateContactDetailField(prefix, method) {
+  const phoneRow = document.getElementById(`row-${prefix}-phone`);
+  const phoneLabel = document.getElementById(`${prefix}-phone-label`);
+  const phoneInput = document.getElementById(`${prefix}_phone`);
+  const usesExistingEmail = method === 'email_only';
+  const config = {
+    whatsapp: {
+      label: strings.q_phone_label_whatsapp || 'WhatsApp number',
+      placeholder: strings.q_phone_placeholder_whatsapp || '+1 555 000 0000'
+    },
+    wechat: {
+      label: strings.q_phone_label_wechat || 'WeChat ID',
+      placeholder: strings.q_phone_placeholder_wechat || 'Your WeChat ID (e.g., wxid_xxxxx)'
+    },
+    telegram: {
+      label: strings.q_phone_label_telegram || 'Telegram username or phone',
+      placeholder: strings.q_phone_placeholder_telegram || '@username or phone number'
+    },
+    email_only: {
+      label: strings.q_phone_label_email_only || 'Email for follow-up',
+      placeholder: strings.q_phone_placeholder_email_only || 'name@example.com'
+    },
+    other: {
+      label: strings.q_phone_label_other || 'Contact detail',
+      placeholder: strings.q_phone_placeholder_other || 'Username, number, or contact ID'
+    }
+  }[method] || {
+    label: strings.q_contact_detail_label || 'Contact detail',
+    placeholder: strings.q_contact_detail_placeholder || 'Choose a contact method, then enter the detail'
+  };
+
+  if (phoneRow) phoneRow.hidden = usesExistingEmail;
+  if (phoneLabel) phoneLabel.textContent = config.label;
+  if (phoneInput) {
+    phoneInput.disabled = usesExistingEmail;
+    phoneInput.required = !usesExistingEmail;
+    phoneInput.placeholder = config.placeholder;
+    phoneInput.type = method === 'email_only' ? 'email' : 'text';
+    phoneInput.inputMode = method === 'whatsapp' ? 'tel' : 'text';
+    if (usesExistingEmail) clearFieldError(phoneInput);
   }
 }
 
@@ -1951,19 +2010,27 @@ function setupInteractivity() {
   const sameAsAbove = document.getElementById('same_as_above');
   if (sameAsAbove) {
     sameAsAbove.addEventListener('change', () => syncSameAsAbove(true));
-    ['name', 'role', 'email', 'phone'].forEach(f => {
+    ['name', 'role', 'email', 'phone', 'preferred_chat'].forEach(f => {
       const src = document.getElementById(`submitter_${f}`);
-      if (src) src.addEventListener('input', () => {
+      if (src) src.addEventListener(f === 'preferred_chat' ? 'change' : 'input', () => {
         if (sameAsAbove.checked) syncSameAsAbove(false);
       });
     });
   }
 
-  // F2: coordinator preferred_chat — WeChat-conditional phone label
+  // F1: submitter preferred_chat — adapt the required contact detail field
+  const submitterChat = document.getElementById('submitter_preferred_chat');
+  if (submitterChat) {
+    submitterChat.addEventListener('change', () => {
+      updateContactDetailField('submitter', submitterChat.value);
+    });
+  }
+
+  // F2: coordinator preferred_chat — adapt the required contact detail field
   const coordChat = document.getElementById('coordinator_preferred_chat');
   if (coordChat) {
     coordChat.addEventListener('change', () => {
-      updateCoordPhoneForWeChat(coordChat.value === 'wechat');
+      updateContactDetailField('coordinator', coordChat.value);
     });
   }
 
@@ -1998,17 +2065,18 @@ function syncSameAsAbove(clearWhenUnchecked) {
   const coordGrid = document.getElementById('coordinator-fields');
   if (!sameAsAbove || !coordGrid) return;
 
-  const fields = ['name', 'role', 'email', 'phone'];
+  const fields = ['name', 'role', 'email', 'phone', 'preferred_chat'];
   if (sameAsAbove.checked) {
     fields.forEach(f => {
       const src = document.getElementById(`submitter_${f}`);
-      const dst = document.getElementById(`coordinator_${f}`);
+      const dst = document.getElementById(f === 'preferred_chat' ? 'coordinator_preferred_chat' : `coordinator_${f}`);
       if (src && dst) {
         dst.value = src.value;
         dst.readOnly = true;
         clearFieldError(dst);
       }
     });
+    updateContactDetailField('coordinator', document.getElementById('coordinator_preferred_chat')?.value || '');
     coordGrid.style.opacity = '0.55';
     coordGrid.style.pointerEvents = 'none';
     queueSave();
@@ -2016,12 +2084,13 @@ function syncSameAsAbove(clearWhenUnchecked) {
   }
 
   fields.forEach(f => {
-    const dst = document.getElementById(`coordinator_${f}`);
+    const dst = document.getElementById(f === 'preferred_chat' ? 'coordinator_preferred_chat' : `coordinator_${f}`);
     if (dst) {
       if (clearWhenUnchecked) dst.value = '';
       dst.readOnly = false;
     }
   });
+  updateContactDetailField('coordinator', document.getElementById('coordinator_preferred_chat')?.value || '');
   coordGrid.style.opacity = '1';
   coordGrid.style.pointerEvents = '';
   queueSave();
@@ -2381,7 +2450,8 @@ function restoreDraft() {
     syncConditionalFields();
     updateBrandPersonalityLimit();
     syncSameAsAbove(false);
-    updateCoordPhoneForWeChat(document.getElementById('coordinator_preferred_chat')?.value === 'wechat');
+    updateContactDetailField('submitter', document.getElementById('submitter_preferred_chat')?.value || '');
+    updateContactDetailField('coordinator', document.getElementById('coordinator_preferred_chat')?.value || '');
     updateDraftStatus('restored');
   } catch {
     localStorage.removeItem(STORAGE_KEY);
@@ -2445,7 +2515,12 @@ function updateFormspreeFields(form) {
   if (legacySubject) legacySubject.value = subjectValue;
   if (name) name.value = form.elements.submitter_name?.value.trim() || company || 'MENA intake submitter';
   if (email) email.value = form.elements.submitter_email?.value.trim() || '';
-  if (phone) phone.value = form.elements.submitter_phone?.value.trim() || '';
+  if (phone) {
+    const usesEmailOnly = form.elements.submitter_preferred_chat?.value === 'email_only';
+    phone.value = usesEmailOnly
+      ? (form.elements.submitter_email?.value.trim() || '')
+      : (form.elements.submitter_phone?.value.trim() || form.elements.submitter_email?.value.trim() || '');
+  }
   if (companyField) companyField.value = company || '';
   if (message) {
     const product = form.elements.what_you_sell?.value.trim();
@@ -2474,6 +2549,7 @@ async function submitForm(form) {
       headers: { 'Accept': 'application/json' }
     });
     if (res.ok) {
+      saveThankYouContext(form);
       localStorage.removeItem(STORAGE_KEY);
       window.location.href = `thank-you.html?lang=${currentLang}`;
     } else {
@@ -2486,6 +2562,40 @@ async function submitForm(form) {
     lbl.textContent = strings.submit_button || 'Submit';
     showFormAlert([], strings.network_error || 'Network error. Please check your connection and try again.');
   }
+}
+
+function saveThankYouContext(form) {
+  const coordinatorMethod = cleanContextValue(form.elements.coordinator_preferred_chat?.value);
+  const submitterMethod = cleanContextValue(form.elements.submitter_preferred_chat?.value);
+  const contactSelect = coordinatorMethod ? form.elements.coordinator_preferred_chat : form.elements.submitter_preferred_chat;
+  const context = {
+    lang: currentLang,
+    name: cleanContextValue(form.elements.submitter_name?.value),
+    company: cleanContextValue(form.elements.company_name?.value),
+    product: cleanContextValue(form.elements.what_you_sell?.value),
+    market: cleanContextValue(getSelectedLabels(form, 'target_mena_countries').join(', ')),
+    audience: cleanContextValue(getSelectedLabels(form, 'target_buyer_type').join(', ')),
+    goal: cleanContextValue(form.elements.primary_goal?.value),
+    goalLabel: cleanContextValue(form.elements.primary_goal?.selectedOptions?.[0]?.textContent),
+    contactMethodValue: coordinatorMethod || submitterMethod,
+    contactMethod: cleanContextValue(contactSelect?.selectedOptions?.[0]?.textContent)
+  };
+
+  try {
+    localStorage.setItem(THANK_YOU_CONTEXT_KEY, JSON.stringify(context));
+  } catch {
+    /* Personalization is optional; the thank-you page has safe fallbacks. */
+  }
+}
+
+function getSelectedLabels(form, name) {
+  return Array.from(form.querySelectorAll(`[name="${CSS.escape(name)}"]:checked`))
+    .map(getChoiceLabel)
+    .filter(Boolean);
+}
+
+function cleanContextValue(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim().slice(0, 120);
 }
 
 function setupLiveValidation(form) {

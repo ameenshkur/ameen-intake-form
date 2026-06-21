@@ -304,7 +304,7 @@
   "review_empty": "Not provided",
   "thank_you_title": "Thanks — we’ve received your intake.",
   "thank_you_title_named": "Thanks, {name} — we’ve received your intake.",
-  "thank_you_body": "We'll review everything carefully and come back to you as soon as possible with a few clarifying questions before we start drafting your strategy. Great strategies start with great conversations — looking forward to ours.",
+  "thank_you_body": "We'll review your intake and follow up if we need anything clarified before drafting your strategy.",
   "thank_you_body_company_market": "We'll review {company}'s details for the {market} market and follow up if we need anything clarified.",
   "thank_you_body_company": "We'll review the details for {company} and follow up if we need anything clarified.",
   "thank_you_body_market": "We'll review your details for the {market} market and follow up if we need anything clarified.",

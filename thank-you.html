@@ -57,35 +57,37 @@
       justify-content: center;
       margin: 0 auto 28px;
       transform-origin: center;
+      isolation: isolate;
       animation: successBadgeSettle 680ms cubic-bezier(0.2, 0.9, 0.18, 1) both;
     }
     .success-layer {
       position: absolute;
       border-radius: 50%;
       opacity: 0;
-      transform: scale(0.08);
+      transform: translateZ(0) scale(0.2);
       transform-origin: center;
       will-change: transform, opacity;
+      backface-visibility: hidden;
+      contain: paint;
     }
     .success-layer.is-outer {
       width: 74px;
       height: 74px;
       background: #ccfbf1;
-      animation: successOuterLayer 620ms cubic-bezier(0.18, 0.9, 0.2, 1) both;
+      animation: successOuterLayer 820ms cubic-bezier(0.16, 0.78, 0.22, 1) both;
     }
     .success-layer.is-middle {
       width: 58px;
       height: 58px;
       background: #5eead4;
-      box-shadow: 0 12px 24px rgba(13, 148, 136, 0.13);
-      animation: successMiddleLayer 620ms cubic-bezier(0.18, 0.9, 0.2, 1) both;
+      animation: successMiddleLayer 820ms cubic-bezier(0.16, 0.78, 0.22, 1) both;
     }
     .success-layer.is-inner {
       width: 44px;
       height: 44px;
       background: var(--accent);
       box-shadow: 0 10px 24px rgba(13, 148, 136, 0.28);
-      animation: successInnerLayer 620ms cubic-bezier(0.18, 0.9, 0.2, 1) both;
+      animation: successInnerLayer 820ms cubic-bezier(0.16, 0.78, 0.22, 1) both;
     }
     .check-icon svg {
       position: relative;
@@ -95,13 +97,13 @@
       color: #ffffff;
       overflow: visible;
       filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
-      animation: successGlow 420ms ease-out 610ms both;
+      animation: successGlow 620ms ease-out 700ms both;
     }
     .check-icon path {
       stroke-dasharray: 30;
       stroke-dashoffset: 30;
       opacity: 0;
-      animation: successDraw 420ms cubic-bezier(0.26, 0, 0.12, 1) 600ms both;
+      animation: successDraw 620ms cubic-bezier(0.22, 0.72, 0.18, 1) 680ms both;
     }
 
     .confirmation-group,
@@ -129,69 +131,57 @@
     @keyframes successOuterLayer {
       0% {
         opacity: 0;
-        transform: scale(0.08);
+        transform: translateZ(0) scale(0.24);
       }
-      18% {
-        opacity: 0.95;
-        transform: scale(0.42);
+      22% {
+        opacity: 0.78;
+        transform: translateZ(0) scale(0.7);
       }
-      50% {
-        opacity: 1;
-        transform: scale(1.34);
-      }
-      78% {
-        opacity: 0.3;
-        transform: scale(1.06);
+      72% {
+        opacity: 0.28;
+        transform: translateZ(0) scale(1.42);
       }
       100% {
         opacity: 0;
-        transform: scale(0.82);
+        transform: translateZ(0) scale(1.54);
       }
     }
 
     @keyframes successMiddleLayer {
       0% {
         opacity: 0;
-        transform: scale(0.08);
+        transform: translateZ(0) scale(0.32);
       }
-      20% {
-        opacity: 0.95;
-        transform: scale(0.46);
+      24% {
+        opacity: 0.86;
+        transform: translateZ(0) scale(0.72);
       }
-      52% {
-        opacity: 1;
-        transform: scale(1.22);
-      }
-      82% {
-        opacity: 0.44;
-        transform: scale(0.98);
+      72% {
+        opacity: 0.54;
+        transform: translateZ(0) scale(1.16);
       }
       100% {
         opacity: 0;
-        transform: scale(0.78);
+        transform: translateZ(0) scale(1.28);
       }
     }
 
     @keyframes successInnerLayer {
       0% {
         opacity: 0;
-        transform: scale(0.08);
+        transform: translateZ(0) scale(0.58);
       }
-      22% {
+      24% {
         opacity: 1;
-        transform: scale(0.5);
+        transform: translateZ(0) scale(0.88);
       }
-      52% {
+      68% {
         opacity: 1;
-        transform: scale(1.2);
-      }
-      78% {
-        opacity: 1;
-        transform: scale(0.96);
+        transform: translateZ(0) scale(1.08);
       }
       100% {
         opacity: 1;
-        transform: scale(1);
+        transform: translateZ(0) scale(1);
       }
     }
 
@@ -264,6 +254,7 @@
       font-size: 15px;
       max-width: 460px;
       margin: 28px auto 14px;
+      white-space: pre-line;
     }
 
     .signature {
@@ -485,9 +476,9 @@
 
     @media (min-width: 768px) {
       body {
-        align-items: flex-start;
+        align-items: center;
         font-size: 18px;
-        padding: 50px 40px 14px;
+        padding: 24px 40px;
       }
 
       .card {
@@ -512,7 +503,7 @@
       .body-text {
         font-size: 17px;
         line-height: 1.5;
-        max-width: 880px;
+        max-width: 760px;
         margin-top: 8px;
         margin-bottom: 8px;
       }
@@ -578,8 +569,8 @@
 
     @media (min-width: 768px) and (max-height: 760px) {
       body {
-        align-items: flex-start;
-        padding-top: 30px;
+        align-items: center;
+        padding-top: 14px;
         padding-bottom: 14px;
       }
 
@@ -827,6 +818,7 @@
     }
 
     function getThankYouBody(strings, context) {
+      const baseBody = strings.thank_you_body || "We'll review everything carefully and come back to you soon.";
       if (context.company && context.market) {
         return fillTemplate(strings.thank_you_body_company_market, context);
       }
@@ -836,7 +828,12 @@
       if (context.market) {
         return fillTemplate(strings.thank_you_body_market, context);
       }
-      return strings.thank_you_body || "We'll review everything carefully and come back to you soon.";
+      return preventMobileOrphan(baseBody);
+    }
+
+    function preventMobileOrphan(text) {
+      if (!window.matchMedia('(max-width: 480px)').matches) return text;
+      return text.replace(' your strategy.', '\nyour strategy.');
     }
 
     function getServiceReviewTitle(strings, context) {

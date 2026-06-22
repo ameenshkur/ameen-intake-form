@@ -695,6 +695,7 @@
     </div>
   </div>
 
+  <script src="assets/vendor/canvas-confetti.browser.min.js"></script>
   <script>
     const LANGS = { en: {}, ar: {}, zh: {} };
     const THANK_YOU_CONTEXT_KEY = 'ameen_intake_thank_you_context_v1';
@@ -994,7 +995,73 @@
       if (link) link.focus();
     }
 
+    function scheduleSuccessConfetti() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      window.setTimeout(launchSuccessConfetti, 760);
+    }
+
+    function launchSuccessConfetti() {
+      if (typeof window.confetti !== 'function') return;
+
+      const check = document.querySelector('.check-icon');
+      const rect = check ? check.getBoundingClientRect() : null;
+      const origin = rect
+        ? {
+            x: (rect.left + rect.width / 2) / window.innerWidth,
+            y: (rect.top + rect.height / 2) / window.innerHeight
+          }
+        : { x: 0.5, y: 0.18 };
+      const shared = {
+        colors: ['#0d9488', '#5eead4', '#ccfbf1', '#ffffff', '#f6d365'],
+        shapes: ['square', 'circle'],
+        disableForReducedMotion: true,
+        zIndex: 10
+      };
+
+      confetti({
+        ...shared,
+        origin: { x: Math.max(origin.x - 0.035, 0), y: origin.y },
+        particleCount: 46,
+        angle: 38,
+        spread: 72,
+        startVelocity: 22,
+        gravity: 0.68,
+        decay: 0.92,
+        scalar: 0.74,
+        ticks: 110
+      });
+
+      confetti({
+        ...shared,
+        origin: { x: Math.min(origin.x + 0.035, 1), y: origin.y },
+        particleCount: 46,
+        angle: 142,
+        spread: 72,
+        startVelocity: 22,
+        gravity: 0.68,
+        decay: 0.92,
+        scalar: 0.74,
+        ticks: 110
+      });
+
+      window.setTimeout(() => {
+        confetti({
+          ...shared,
+          origin,
+          particleCount: 22,
+          angle: 90,
+          spread: 110,
+          startVelocity: 14,
+          gravity: 0.74,
+          decay: 0.91,
+          scalar: 0.54,
+          ticks: 90
+        });
+      }, 120);
+    }
+
     init();
+    scheduleSuccessConfetti();
   </script>
 </body>
 </html>

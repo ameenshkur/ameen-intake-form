@@ -264,14 +264,11 @@
     }
 
     .contact-action {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      display: block;
       margin: 18px auto 0;
       color: var(--muted);
       font-size: 14px;
+      text-align: center;
     }
 
     .contact-action[hidden] {
@@ -279,17 +276,19 @@
     }
 
     .contact-action a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 38px;
-      padding: 8px 14px;
-      border: 1px solid rgba(13, 148, 136, 0.35);
-      border-radius: 999px;
+      display: inline;
+      padding: 0 1px 2px;
+      border: 0;
+      border-bottom: 1px solid rgba(13, 148, 136, 0.28);
+      border-radius: 0;
       color: var(--accent);
-      background: #ffffff;
       font-weight: 600;
       text-decoration: none;
+      transition: border-color 160ms ease, color 160ms ease;
+    }
+
+    .contact-action a:hover {
+      border-bottom-color: currentColor;
     }
 
     .contact-action a:focus-visible {
@@ -873,7 +872,7 @@
 
       const methodKey = getContactMethodKey(context.contactMethodValue);
       const action = getDirectContactAction(strings, methodKey);
-      text.textContent = action.text;
+      text.textContent = action.prompt;
       link.textContent = action.button;
       link.href = action.href;
       link.target = action.external ? '_blank' : '';
@@ -892,15 +891,15 @@
       const fallbackEmail = DIRECT_CONTACT.email;
       const fallbackHref = getMailHref(fallbackEmail);
       const fallback = {
-        text: strings.thank_you_direct_contact_text || 'Have something else to say? Contact me directly.',
-        button: strings.thank_you_direct_contact_button || 'Contact me directly',
+        prompt: strings.thank_you_direct_contact_prompt || 'Have something else to say? ',
+        button: strings.thank_you_direct_contact_button || 'Email me directly',
         href: fallbackHref,
         external: false
       };
 
       if (methodKey === 'whatsapp' && DIRECT_CONTACT.whatsapp) {
         return {
-          text: strings.thank_you_direct_contact_text_whatsapp || fallback.text,
+          prompt: strings.thank_you_direct_contact_prompt_whatsapp || fallback.prompt,
           button: strings.thank_you_direct_contact_button_whatsapp || fallback.button,
           href: getWhatsAppHref(DIRECT_CONTACT.whatsapp),
           external: true
@@ -908,7 +907,7 @@
       }
       if (methodKey === 'telegram' && DIRECT_CONTACT.telegram) {
         return {
-          text: strings.thank_you_direct_contact_text_telegram || fallback.text,
+          prompt: strings.thank_you_direct_contact_prompt_telegram || fallback.prompt,
           button: strings.thank_you_direct_contact_button_telegram || fallback.button,
           href: getTelegramHref(DIRECT_CONTACT.telegram),
           external: true
@@ -916,7 +915,7 @@
       }
       if (methodKey === 'wechat' && DIRECT_CONTACT.wechat) {
         return {
-          text: strings.thank_you_direct_contact_text_wechat || fallback.text,
+          prompt: strings.thank_you_direct_contact_prompt_wechat || fallback.prompt,
           button: strings.thank_you_direct_contact_button_wechat || fallback.button,
           href: DIRECT_CONTACT.wechat,
           external: false,
@@ -925,7 +924,7 @@
       }
       if (methodKey === 'email_only' && fallbackEmail) {
         return {
-          text: strings.thank_you_direct_contact_text_email_only || fallback.text,
+          prompt: strings.thank_you_direct_contact_prompt_email_only || fallback.prompt,
           button: strings.thank_you_direct_contact_button_email_only || fallback.button,
           href: fallbackHref,
           external: false
@@ -933,7 +932,7 @@
       }
       if (methodKey === 'other' && DIRECT_CONTACT.other) {
         return {
-          text: strings.thank_you_direct_contact_text_other || fallback.text,
+          prompt: strings.thank_you_direct_contact_prompt_other || fallback.prompt,
           button: strings.thank_you_direct_contact_button_other || fallback.button,
           href: getWhatsAppHref(DIRECT_CONTACT.other),
           external: true

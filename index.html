@@ -82,6 +82,13 @@
       padding: 8px 20px;
       display: flex;
       align-items: center;
+      justify-content: center;
+    }
+    .progress-header-inner {
+      width: min(100%, 980px);
+      display: grid;
+      grid-template-columns: max-content minmax(180px, 1fr) max-content;
+      align-items: center;
       gap: 12px;
     }
     #progress-label {
@@ -91,7 +98,7 @@
       min-width: 112px;
     }
     #progress-track {
-      flex: 1;
+      width: 100%;
       height: 4px;
       background: var(--border);
       border-radius: 4px;
@@ -108,8 +115,8 @@
     /* ── Language switcher ── */
     #lang-switcher {
       position: relative;
-      margin-inline-start: auto;
       flex-shrink: 0;
+      justify-self: end;
     }
     #lang-btn {
       display: flex;
@@ -127,6 +134,18 @@
     }
     #lang-btn:hover { border-color: var(--accent); }
     #lang-btn img { width: 20px; height: auto; border-radius: 2px; }
+    #lang-arrow {
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid currentColor;
+      opacity: 0.55;
+      transition: transform 0.2s ease;
+    }
+    #lang-btn[aria-expanded="true"] #lang-arrow {
+      transform: rotate(180deg);
+    }
     #lang-dropdown {
       display: none;
       position: absolute;
@@ -772,12 +791,13 @@
     @media (min-width: 768px) {
       body { font-size: 22px; }
 
-      #progress-bar-wrap { padding: 14px 30px; gap: 18px; }
-      #progress-label { font-size: 16px; min-width: 168px; }
-      #progress-track { height: 8px; }
+      #progress-bar-wrap { padding: 10px 30px; }
+      .progress-header-inner { gap: 14px; }
+      #progress-label { font-size: 14px; min-width: 150px; }
+      #progress-track { height: 6px; }
 
-      #lang-btn { gap: 10px; font-size: 16px; padding: 9px 16px; }
-      #lang-btn img { width: 28px; }
+      #lang-btn { gap: 8px; font-size: 14px; padding: 6px 12px; }
+      #lang-btn img { width: 22px; }
       .lang-option { font-size: 17px; padding: 14px 18px; }
       .lang-option img { width: 28px; }
       #lang-dropdown { min-width: 192px; }
@@ -858,6 +878,10 @@
     @media (max-width: 767px) {
       body { background: #f3f4f2; }
       #progress-bar-wrap { padding: 8px 12px; }
+      .progress-header-inner {
+        grid-template-columns: minmax(0, max-content) minmax(72px, 1fr) max-content;
+        gap: 8px;
+      }
       #progress-label { min-width: 0; max-width: 148px; overflow: hidden; text-overflow: ellipsis; }
       .page-wrap {
         max-width: 390px;
@@ -980,15 +1004,18 @@
 
 <!-- ── Progress bar ── -->
 <div id="progress-bar-wrap">
-  <span id="progress-label"></span>
-  <div id="progress-track"><div id="progress-fill"></div></div>
-  <div id="lang-switcher">
-    <button id="lang-btn" aria-haspopup="listbox" aria-expanded="false">
-      <img id="lang-flag" src="https://flagcdn.com/w40/us.png" alt="" />
-      <span id="lang-label">EN</span>
-    </button>
-    <div id="lang-dropdown" role="listbox">
-      <!-- populated by JS -->
+  <div class="progress-header-inner">
+    <span id="progress-label"></span>
+    <div id="progress-track"><div id="progress-fill"></div></div>
+    <div id="lang-switcher">
+      <button id="lang-btn" aria-haspopup="listbox" aria-expanded="false">
+        <img id="lang-flag" src="https://flagcdn.com/w40/us.png" alt="" />
+        <span id="lang-label">EN</span>
+        <span id="lang-arrow" aria-hidden="true"></span>
+      </button>
+      <div id="lang-dropdown" role="listbox">
+        <!-- populated by JS -->
+      </div>
     </div>
   </div>
 </div>

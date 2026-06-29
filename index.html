@@ -5,14 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Intake Form</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     @font-face {
-      font-family: 'Agoma';
-      src: url('assets/fonts/agoma.ttf') format('truetype');
-      font-weight: 400 800;
+      font-family: 'Inter';
+      src: url('assets/fonts/inter-300-800.woff2') format('woff2');
+      font-weight: 300 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Noto Kufi Arabic';
+      src: url('assets/fonts/noto-kufi-arabic-400-700.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Noto Sans SC';
+      src: url('assets/fonts/noto-sans-sc-300-800.woff2') format('woff2');
+      font-weight: 300 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Sora';
+      src: url('assets/fonts/sora-100-800.woff2') format('woff2');
+      font-weight: 100 800;
       font-style: normal;
       font-display: swap;
     }
@@ -35,7 +56,7 @@
       --pill-active-border: #0d9488;
       --radius: 8px;
       --font-body: 'Inter', Arial, sans-serif;
-      --font-heading: 'Agoma', 'Inter', Arial, sans-serif;
+      --font-heading: 'Sora', 'Inter', Arial, sans-serif;
     }
 
     html { scroll-behavior: smooth; min-width: 100%; overflow-x: hidden; }
@@ -1867,7 +1888,7 @@ function applyDir() {
   const meta = strings._meta || {};
   const dir = meta.dir || 'ltr';
   const bodyFont = meta.font_family || "'Inter', Arial, sans-serif";
-  const headingFont = currentLang === 'en' ? "'Agoma', 'Inter', Arial, sans-serif" : bodyFont;
+  const headingFont = currentLang === 'en' ? "'Sora', 'Inter', Arial, sans-serif" : bodyFont;
   document.documentElement.setAttribute('lang', currentLang);
   document.documentElement.setAttribute('dir', dir);
   document.documentElement.style.setProperty('--font-body', bodyFont);

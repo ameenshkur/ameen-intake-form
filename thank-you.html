@@ -5,10 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thank You</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Outfit:wght@400;500&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    @font-face {
+      font-family: 'Inter';
+      src: url('assets/fonts/inter-300-800.woff2') format('woff2');
+      font-weight: 300 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Noto Kufi Arabic';
+      src: url('assets/fonts/noto-kufi-arabic-400-700.woff2') format('woff2');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Noto Sans SC';
+      src: url('assets/fonts/noto-sans-sc-300-800.woff2') format('woff2');
+      font-weight: 300 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Sora';
+      src: url('assets/fonts/sora-100-800.woff2') format('woff2');
+      font-weight: 100 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -17,8 +46,8 @@
       --text: #1a1a1a;
       --muted: #6b6b6b;
       --border: #e5e5e5;
-      --font-body: 'Outfit', sans-serif;
-      --font-heading: 'Syne', sans-serif;
+      --font-body: 'Inter', Arial, sans-serif;
+      --font-heading: 'Sora', 'Inter', Arial, sans-serif;
     }
 
     body {
@@ -724,8 +753,8 @@
       }
 
       const meta = strings._meta || {};
-      const bodyFont = meta.font_family || "'Outfit', sans-serif";
-      const headingFont = lang === 'en' ? "'Syne', sans-serif" : bodyFont;
+      const bodyFont = meta.font_family || "'Inter', Arial, sans-serif";
+      const headingFont = lang === 'en' ? "'Sora', 'Inter', Arial, sans-serif" : bodyFont;
       document.documentElement.setAttribute('lang', lang);
       document.documentElement.setAttribute('dir', meta.dir || 'ltr');
       document.documentElement.style.setProperty('--font-body', bodyFont);

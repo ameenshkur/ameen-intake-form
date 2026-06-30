@@ -278,6 +278,7 @@
       list-style: none;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
       gap: 8px;
       margin: 26px 0 0;
     }
@@ -327,10 +328,36 @@
       font-weight: 500;
     }
     .step-item.complete {
-      color: var(--text);
-      border-color: rgba(13,148,136,0.35);
+      color: var(--muted);
+      border-color: rgba(13,148,136,0.32);
+      background: #fff;
     }
-    .step-item.complete .step-icon { color: var(--accent-dark); }
+    .step-item.complete .step-icon { color: var(--accent); }
+    .step-status {
+      display: none;
+      width: max-content;
+      max-width: 100%;
+      align-items: center;
+      gap: 4px;
+      border-radius: 999px;
+      border: 1px solid rgba(13,148,136,0.24);
+      background: rgba(13,148,136,0.06);
+      color: var(--accent-dark);
+      padding: 2px 7px;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .step-item.complete .step-status,
+    .mobile-step-card.done .step-status { display: inline-flex; }
+    .step-status-icon {
+      display: inline-flex;
+      width: 12px;
+      height: 12px;
+      flex: 0 0 auto;
+    }
+    .step-status-icon svg { width: 100%; height: 100%; }
     .form-alert {
       display: none;
       margin-top: 20px;
@@ -379,9 +406,11 @@
       color: var(--accent-dark);
     }
     .mobile-step-card.done {
-      color: var(--text);
-      border-color: rgba(13,148,136,0.35);
+      color: var(--muted);
+      border-color: rgba(13,148,136,0.32);
+      background: #fff;
     }
+    .mobile-step-card .step-status { font-size: 9px; padding: 2px 6px; }
     .mobile-step-card.empty {
       visibility: hidden;
     }
@@ -673,7 +702,6 @@
       margin-top: 24px;
       padding-top: 24px;
     }
-    body.welcome-mode .required-note { display: none; }
     body.welcome-mode #next-btn {
       color: #fff;
       background: var(--accent);
@@ -714,6 +742,17 @@
     .nav-btn:active { transform: scale(0.98); }
     .nav-btn[hidden],
     #submit-btn[hidden] { display: none; }
+    #review-return-btn {
+      margin-inline-start: auto;
+      color: #fff;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    #review-return-btn:hover {
+      color: #fff;
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+    }
 
     #submit-btn {
       font-family: var(--font-body);
@@ -732,10 +771,6 @@
     #submit-btn:active { transform: scale(0.98); }
     #submit-btn:disabled { opacity: 0.65; cursor: not-allowed; }
 
-    .required-note {
-      font-size: 13px;
-      color: var(--muted);
-    }
     .review-list {
       display: grid;
       gap: 14px;
@@ -746,10 +781,24 @@
       border-radius: var(--radius);
       padding: 14px;
     }
+    .review-card-heading {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 8px;
+    }
+    .review-card-icon {
+      display: inline-flex;
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+      color: var(--accent);
+    }
+    .review-card-icon svg { width: 100%; height: 100%; }
     .review-card h3 {
       font-size: 16px;
       line-height: 1.35;
-      margin-bottom: 8px;
+      margin-bottom: 0;
     }
     .review-card dl {
       display: grid;
@@ -798,6 +847,7 @@
     /* ── Desktop scale-up ── */
     @media (min-width: 768px) {
       body { font-size: 22px; }
+      body.welcome-mode .wizard-actions { justify-content: center; }
 
       #progress-bar-wrap { padding: 10px 30px; }
       .progress-header-inner { gap: 14px; }
@@ -824,9 +874,9 @@
       .intake-meta { font-size: 16px; gap: 12px; }
       .meta-pill { min-height: 42px; padding: 9px 14px; }
       .ui-icon { width: 20px; height: 20px; }
-      .step-list { grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 34px; }
+      .step-list { grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 34px; }
       .welcome-overview-title { margin-top: 40px; font-size: 18px; }
-      .step-item { font-size: 14px; padding: 13px; min-height: 106px; }
+      .step-item { height: 100%; font-size: 14px; padding: 13px; min-height: 118px; }
       .step-icon { width: 22px; height: 22px; }
       .step-number { font-size: 12px; }
       .form-alert { font-size: 17px; padding: 16px 18px; }
@@ -873,13 +923,17 @@
       .submit-wrap { margin-top: 72px; padding-top: 52px; gap: 18px; }
       .nav-btn { font-size: 20px; min-height: 64px; padding: 18px 34px; }
       #submit-btn { font-size: 22px; padding: 20px 48px; }
-      .required-note { font-size: 16px; }
       .review-list { gap: 18px; }
       .review-card { padding: 20px; }
       .review-card h3 { font-size: 22px; }
+      .review-card-icon { width: 24px; height: 24px; }
       .review-card dt { font-size: 15px; }
       .review-card dd { font-size: 18px; }
       .review-edit { font-size: 17px; }
+    }
+
+    @media (min-width: 900px) {
+      .step-list { grid-template-columns: repeat(5, minmax(0, 1fr)); }
     }
 
     /* ── Mobile ── */
@@ -978,8 +1032,20 @@
       .contact-grid { grid-template-columns: 1fr; }
       .contact-field.full { grid-column: 1; }
 
-      .pill-group { gap: 7px; }
-      .pill-item label { padding: 8px 13px; min-height: 38px; display: flex; align-items: center; font-size: 13px; }
+      .pill-group { width: 100%; gap: 7px; }
+      .pill-item { min-width: 0; max-width: 100%; }
+      .pill-item label {
+        display: flex;
+        align-items: center;
+        max-width: 100%;
+        min-height: 38px;
+        padding: 8px 13px;
+        font-size: 13px;
+        line-height: 1.35;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        text-align: start;
+      }
 
       .submit-wrap {
         position: sticky;
@@ -991,7 +1057,6 @@
         border-top: 1px solid var(--border);
         backdrop-filter: blur(10px);
       }
-      .required-note { font-size: 12px; }
       .wizard-actions { align-items: center; }
       body.welcome-mode .wizard-actions { justify-content: center; }
       body.welcome-mode .wizard-actions { margin-inline-end: 14px; }
@@ -1006,6 +1071,7 @@
       #submit-btn { min-height: 44px; padding: 10px 14px; }
       #next-btn,
       #submit-btn { flex: 1; }
+      #review-return-btn { flex: 1.35; }
     }
   </style>
 </head>
@@ -1715,10 +1781,10 @@
 
     <!-- Submit -->
     <div class="submit-wrap">
-      <p class="required-note" data-i18n="required_note"></p>
       <div class="wizard-actions">
         <button type="button" class="nav-btn" id="back-btn" data-i18n="back_button"></button>
         <button type="button" class="nav-btn" id="next-btn" data-i18n="next_button"></button>
+        <button type="button" class="nav-btn" id="review-return-btn" data-i18n="review_done_editing" hidden></button>
         <button type="submit" id="submit-btn" hidden>
           <span id="submit-label" data-i18n="submit_button"></span>
         </button>
@@ -1744,6 +1810,8 @@ const LANGS = {
 let currentLang = 'en';
 let strings = {};
 let currentStep = 0;
+let editingFromReview = false;
+const completedSteps = new Set();
 let saveTimer;
 const STORAGE_KEY = 'ameen_intake_form_draft_v2';
 const THANK_YOU_CONTEXT_KEY = 'ameen_intake_thank_you_context_v1';
@@ -2167,6 +2235,7 @@ function setupWizard() {
   buildStepList();
   const backBtn = document.getElementById('back-btn');
   const nextBtn = document.getElementById('next-btn');
+  const reviewReturnBtn = document.getElementById('review-return-btn');
   backBtn.addEventListener('click', () => goToStep(currentStep - 1));
   nextBtn.addEventListener('click', () => {
     const scope = sections[currentStep];
@@ -2178,12 +2247,32 @@ function setupWizard() {
       focusFirstError(errors);
       return;
     }
+    completedSteps.add(currentStep);
+    queueSave();
     goToStep(currentStep + 1);
   });
-  document.querySelectorAll('.review-edit').forEach(btn => {
-    btn.addEventListener('click', () => goToStep(Number(btn.dataset.step)));
-  });
+  reviewReturnBtn.addEventListener('click', finishReviewEdit);
   updateWizardUI(false);
+}
+
+function beginReviewEdit(index) {
+  editingFromReview = true;
+  goToStep(index);
+}
+
+function finishReviewEdit() {
+  const scope = sections[currentStep];
+  clearErrors(scope);
+  const errors = validate(document.getElementById('intake-form'), scope);
+  if (errors.length) {
+    showErrors(errors);
+    showFormAlert(errors);
+    focusFirstError(errors);
+    return;
+  }
+  completedSteps.add(currentStep);
+  saveDraft();
+  goToStep(totalSteps - 1);
 }
 
 function buildStepList() {
@@ -2206,14 +2295,22 @@ function getStepLabel(index) {
 }
 
 function getStepMarkup(index) {
-  return `<div class="step-top"><span class="step-icon">${iconSvg(STEP_ICONS[index])}</span><span class="step-number">${index + 1}/${totalSteps}</span></div><span class="step-title">${getStepLabel(index)}</span>`;
+  return `<div class="step-top"><span class="step-icon">${iconSvg(STEP_ICONS[index])}</span><span class="step-number">${index + 1}/${totalSteps}</span></div><span class="step-title">${getStepLabel(index)}</span>${getCompletedStatusMarkup()}`;
+}
+
+function getCompletedStatusMarkup() {
+  const label = strings.step_status_completed || strings.mobile_step_state_done || 'Completed';
+  return `<span class="step-status"><span class="step-status-icon">${iconSvg('clipboard-check')}</span><span>${label}</span></span>`;
 }
 
 function goToStep(index) {
   if (index < 0 || index >= totalSteps) return;
   currentStep = index;
   hideFormAlert();
-  if (currentStep === totalSteps - 1) buildReview();
+  if (currentStep === totalSteps - 1) {
+    editingFromReview = false;
+    buildReview();
+  }
   updateWizardUI(true);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -2232,9 +2329,13 @@ function updateWizardUI(shouldFocus) {
 
   const backBtn = document.getElementById('back-btn');
   const nextBtn = document.getElementById('next-btn');
+  const reviewReturnBtn = document.getElementById('review-return-btn');
   const submitBtn = document.getElementById('submit-btn');
   if (backBtn) backBtn.hidden = currentStep === 0;
   if (nextBtn) nextBtn.hidden = currentStep === totalSteps - 1;
+  if (reviewReturnBtn) {
+    reviewReturnBtn.hidden = !editingFromReview || currentStep === 0 || currentStep === totalSteps - 1;
+  }
   if (submitBtn) submitBtn.hidden = currentStep !== totalSteps - 1;
   if (nextBtn) {
     nextBtn.textContent = currentStep === 0
@@ -2242,13 +2343,7 @@ function updateWizardUI(shouldFocus) {
       : (strings.next_button || 'Next');
   }
 
-  document.querySelectorAll('.step-item').forEach((item, index) => {
-    item.innerHTML = getStepMarkup(index);
-    item.classList.toggle('active', index === currentStep);
-    item.classList.toggle('complete', index < currentStep);
-  });
-
-  updateMobileStepSummary();
+  updateStepStates();
   updateHeroContent();
   updateStepIllustration();
   updateProgressLabel(currentStep + 1);
@@ -2259,6 +2354,21 @@ function updateWizardUI(shouldFocus) {
       heading.focus({ preventScroll: true });
     }
   }
+}
+
+function updateStepStates() {
+  document.querySelectorAll('.step-item').forEach((item, index) => {
+    const isCurrent = index === currentStep;
+    const isComplete = completedSteps.has(index) && !isCurrent;
+    const state = isCurrent ? 'current' : isComplete ? 'done' : 'next';
+    item.innerHTML = getStepMarkup(index);
+    item.classList.toggle('active', isCurrent);
+    item.classList.toggle('complete', isComplete);
+    item.setAttribute('aria-label', getStepAriaLabel(index, state));
+    if (isCurrent) item.setAttribute('aria-current', 'step');
+    else item.removeAttribute('aria-current');
+  });
+  updateMobileStepSummary();
 }
 
 function updateHeroContent() {
@@ -2325,6 +2435,7 @@ function updateMobileStepSummary() {
         <span class="step-number">${index + 1}/${totalSteps}</span>
       </div>
       <span class="step-title">${getMobileStepLabel(index)}</span>
+      ${state === 'done' ? getCompletedStatusMarkup() : ''}
     </div>`;
   }).join('');
 }
@@ -2385,9 +2496,17 @@ function buildReview() {
     const card = document.createElement('div');
     card.className = 'review-card';
 
+    const headingWrap = document.createElement('div');
+    headingWrap.className = 'review-card-heading';
+    const icon = document.createElement('span');
+    icon.className = 'review-card-icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.innerHTML = iconSvg(STEP_ICONS[index]);
     const heading = document.createElement('h3');
     heading.textContent = strings[STEP_TITLE_KEYS[index]] || section.querySelector('.section-heading')?.textContent || '';
-    card.appendChild(heading);
+    headingWrap.appendChild(icon);
+    headingWrap.appendChild(heading);
+    card.appendChild(headingWrap);
 
     const dl = document.createElement('dl');
     collectReviewItems(section).forEach(item => {
@@ -2405,7 +2524,7 @@ function buildReview() {
     edit.className = 'review-edit';
     edit.dataset.step = index;
     edit.textContent = strings.review_edit || 'Edit this section';
-    edit.addEventListener('click', () => goToStep(index));
+    edit.addEventListener('click', () => beginReviewEdit(index));
     card.appendChild(edit);
 
     list.appendChild(card);
@@ -2470,6 +2589,10 @@ function setupAutosave() {
 }
 
 function queueSave() {
+  if (completedSteps.has(currentStep) && validate(document.getElementById('intake-form'), sections[currentStep]).length) {
+    completedSteps.delete(currentStep);
+    updateStepStates();
+  }
   clearTimeout(saveTimer);
   updateDraftStatus('saving');
   saveTimer = setTimeout(saveDraft, 250);
@@ -2485,6 +2608,7 @@ function saveDraft() {
       data[el.id || el.name] = el.value;
     }
   });
+  data._completedSteps = Array.from(completedSteps);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   updateDraftStatus('saved');
 }
@@ -2494,6 +2618,12 @@ function restoreDraft() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return;
     const data = JSON.parse(raw);
+    completedSteps.clear();
+    if (Array.isArray(data._completedSteps)) {
+      data._completedSteps.forEach(index => {
+        if (Number.isInteger(index) && index >= 0 && index < totalSteps - 1) completedSteps.add(index);
+      });
+    }
     document.querySelectorAll('#intake-form input, #intake-form textarea, #intake-form select').forEach(el => {
       if (!el.name || el.type === 'hidden') return;
       const key = el.id || el.name;
